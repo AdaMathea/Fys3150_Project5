@@ -6,19 +6,19 @@ class SIRS {
         
     public:
         //Values
-        int a;
-        int b;
+        double a;
+        double b;
         double c;
-        int S;
-        int I;
-        int N;
-        int R;
+        double S;
+        double I;
+        double N;
+        double R;
 
         //Functions
         double dSdt(double, double);
         double dIdt(double, double);
-        //double dRdt();
-        double rungekutta(double, double, double, double, double);
+        double dRdt(double, double);
+        void rungekutta(double, double, double, double, double);
     
 };
 
