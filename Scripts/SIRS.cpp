@@ -44,7 +44,11 @@ double SIRS::dRdt(double t, double y) {
     }
 }
 
-void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h) {
+double SIRS::a_t(double omega, double a_0, double A, double t_n) {
+    A*cos(omega*t_n) + a_0;
+}
+
+void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, bool season) {
     this->S = S_0;
     this->I = I_0;
     this->R = this->N - this->S - this->I;
@@ -55,9 +59,19 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h) {
     mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
     uniform_real_distribution<double> dis(0, 1);
 
-    double delta_t = min(min(4/(this->a*this->N), 1/(this->b*this->N)), 1/(this->c*this->N));
+    double t_n = t_0;
 
     for(int i=1; i <= n; i++) {
+
+        if(season = true) {
+            this->a = a_t(2*M_PI/100, 4, 1, t_n);
+        }
+        else {
+            this->a = this->a;
+        }
+
+        double delta_t = min(min(4/(this->a*this->N), 1/(this->b*this->N)), 1/(this->c*this->N));
+
         double p_si = this->a*this->S*this->I*delta_t/this->N;
         double p_ir = this->b*this->I*delta_t;
         double p_rs = this->c*this->R*delta_t;
@@ -66,20 +80,15 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h) {
             this->S -= 1;
             this->I += 1;
         }
-        else {
-        }
         if(dis(gen) < p_ir) {
             this->I -= 1;
             this->R += 1;
-        }
-        else {
         }
         if(dis(gen) < p_rs) {
             this->R -= 1;
             this->S += 1;
         }
-        else {
-        }
+        t_n += delta_t;
     }
 }
 
