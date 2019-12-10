@@ -44,7 +44,52 @@ double SIRS::dRdt(double t, double y) {
     }
 }
 
-void SIRS::rungekutta(double t_0, double S_0, double I_0, double t, double h) 
+double SIRS::a_t(double omega, double a_0, double A, double t_n) {
+    A*cos(omega*t_n) + a_0;
+}
+
+void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, bool season) {
+    this->S = S_0;
+    this->I = I_0;
+    this->R = this->N - this->S - this->I;
+
+    int n = (int)((t - t_0) / h); 
+    
+    random_device rd;  //Will be used to obtain a seed for the random number engine
+    mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+    uniform_real_distribution<double> dis(0, 1);
+
+    double t_n = t_0;
+
+    for(int i=1; i <= n; i++) {
+
+        if(season = true) {
+            this->a = a_t(2*M_PI/100, 4, 1, t_n);
+        }
+
+        double delta_t = min(min(4/(this->a*this->N), 1/(this->b*this->N)), 1/(this->c*this->N));
+
+        double p_si = this->a*this->S*this->I*delta_t/this->N;
+        double p_ir = this->b*this->I*delta_t;
+        double p_rs = this->c*this->R*delta_t;
+
+        if(dis(gen) < p_si) {
+            this->S -= 1;
+            this->I += 1;
+        }
+        if(dis(gen) < p_ir) {
+            this->I -= 1;
+            this->R += 1;
+        }
+        if(dis(gen) < p_rs) {
+            this->R -= 1;
+            this->S += 1;
+        }
+        t_n += delta_t;
+    }
+}
+
+void SIRS::rungekutta(double t_0, double S_0, double I_0, double t, double h, bool season) 
 { 
     // Count number of iterations using step size or 
     // step height h 
@@ -59,6 +104,9 @@ void SIRS::rungekutta(double t_0, double S_0, double I_0, double t, double h)
     // Iterate for number of iterations 
     for (int i=1; i<=n; i++) 
     { 
+        if(season = true) {
+            this->a = a_t(2*M_PI/100, 4, 1, t_0);
+        }
         // Apply Runge Kutta Formulas to find 
         // next value of y 
         double k1_S = h*this->dSdt(t_0, S); 

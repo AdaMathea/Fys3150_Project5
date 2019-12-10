@@ -18,8 +18,9 @@ class SIRS {
         double dSdt(double, double);
         double dIdt(double, double);
         double dRdt(double, double);
-        void rungekutta(double, double, double, double, double);
-        void Write_to_file(void);
+        double a_t(double, double, double, double);
+        void rungekutta(double, double, double, double, double, bool);
+        void montecarlo(double, double, double, double, double, bool);
     
 };
 
