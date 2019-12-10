@@ -8,17 +8,33 @@
 #include <SIRS.h>
 using namespace std;
 
-double SIRS::dSdt(double t, double y) {
-    double l = this->c*(this->N - this->S - this->I);
-    double r = (this->a*this->S*this->I)/this->N;
-    if(abs(l - r) < 1e-12) {
-        //cout << "ops" << endl;
-        return 0;
+double SIRS::dSdt(double t, double y)
+{
+    if (Model == 'S')
+        {
+            double value = c * (N - S - I) - (a * S * I) / N;
+            if(abs(value) < 1e-12)
+            {
+                return 0;
+            }
+            else
+            {
+                return value;
+            }
+        }
+        else if (Model == 'L')
+        {
+            double value = c * R - (a * S * I) / N - d * S + e * N;
+            if(abs(value) < 1e-12)
+            {
+                return 0;
+            }
+            else
+            {
+                return value;
+            }
+        }
     }
-    else {
-        return l-r;
-    }
-}
 
 double SIRS::dIdt(double t, double y) {
     double l = (this->a*this->S*this->I/this->N);
@@ -49,9 +65,9 @@ double SIRS::a_t(double omega, double a_0, double A, double t_n) {
 }
 
 void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, bool season) {
-    this->S = S_0;
-    this->I = I_0;
-    this->R = this->N - this->S - this->I;
+    S = S_0;
+    I = I_0;
+    R = N - S - I;
 
     int n = (int)((t - t_0) / h); 
     
@@ -64,42 +80,57 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, bo
     for(int i=1; i <= n; i++) {
 
         if(season = true) {
-            this->a = a_t(2*M_PI/100, 4, 1, t_n);
+            a = a_t(2*M_PI/100, 4, 1, t_n);
         }
 
-        double delta_t = min(min(4/(this->a*this->N), 1/(this->b*this->N)), 1/(this->c*this->N));
+        double delta_t = min(min(4 / (a * N), 1 / (b * N)), 1 / (c * N));
 
-        double p_si = this->a*this->S*this->I*delta_t/this->N;
-        double p_ir = this->b*this->I*delta_t;
-        double p_rs = this->c*this->R*delta_t;
+        double p_si = a * S * I * delta_t / N;
+        double p_ir = b * I * delta_t;
+        double p_rs = c * R * delta_t;
 
         if(dis(gen) < p_si) {
-            this->S -= 1;
-            this->I += 1;
+            S -= 1;
+            I += 1;
         }
         if(dis(gen) < p_ir) {
-            this->I -= 1;
-            this->R += 1;
+            I -= 1;
+            R += 1;
         }
         if(dis(gen) < p_rs) {
-            this->R -= 1;
-            this->S += 1;
+            R -= 1;
+            S += 1;
         }
         t_n += delta_t;
     }
 }
 
-void SIRS::rungekutta(double t_0, double S_0, double I_0, double t, double h, bool season) 
+void SIRS::rungekutta(double t_0, double S_0, double I_0, double t, double h, char letter, bool vital = false, bool season = false)
 { 
     // Count number of iterations using step size or 
     // step height h 
     int n = (int)((t - t_0) / h); 
+
+    t_ = t_0;
 
     double k1_S, k2_S, k3_S, k4_S;
     double k1_I, k2_I, k3_I, k4_I;
 
     S = S_0;
     I = I_0;
+
+    // Open file to save values
+    ofstream myfile;
+    if (letter == 'A')
+    {
+        myfile.open("5a.txt");
+    }
+    else
+    {
+        myfile.open("5a.txt", ios::app);
+    }
+    myfile << letter << endl << "t S I R" << endl;
+    myfile << t_ << " " << S << " " << I << " " << R << endl;
 
     // Iterate for number of iterations 
     for (int i=1; i<=n; i++) 
@@ -133,11 +164,9 @@ void SIRS::rungekutta(double t_0, double S_0, double I_0, double t, double h, bo
         //cout << S << endl;
 
         // Update next value of t
-        t_0 = t_0 + h; 
+        t_ = t_ + h;
 
-        this->S = S;
-        this->I = I;
-        this->R = this->N - this->S - this->I;
+        R = N - S - I;
     } 
 
     

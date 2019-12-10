@@ -18,7 +18,7 @@ int main()
     A->b = 1;
     A->c = 0.5;
 
-    A->rungekutta(0, 300, 100, 100, 0.1, true);
+    A->rungekutta(0, 300, 100, 100, 0.1, 'A', true, false);
     //A->montecarlo(0, 100, 300, 100, 0.1, true);
     //A->montecarlo(0, 100, 300, 100, 0.1, false);
     
@@ -31,7 +31,7 @@ int main()
     B->b = 2;
     B->c = 0.5;
 
-    B->rungekutta(0, 300, 100, 100, 0.1, true);
+    B->rungekutta(0, 300, 100, 100, 0.1, 'B', true, false);
     //B->montecarlo(0, 100, 300, 100, 0.1, true);
     //B->montecarlo(0, 100, 300, 100, 0.1, false);
 
@@ -44,7 +44,7 @@ int main()
     C->b = 3;
     C->c = 0.5;
 
-    C->rungekutta(0, 300, 100, 100, 0.1, true);
+    C->rungekutta(0, 300, 100, 100, 0.1, 'C', true, false);
     //C->montecarlo(0, 100, 300, 100, 0.1, true);
     //C->montecarlo(0, 100, 300, 100, 0.1, false);
 
@@ -57,7 +57,7 @@ int main()
     D->b = 4;
     D->c = 0.5;
 
-    D->rungekutta(0, 300, 100, 100, 0.1, true);
+    D->rungekutta(0, 300, 100, 100, 0.1, 'D', true, false);
     //D->montecarlo(0, 100, 300, 100, 0.1, true);
     //D->montecarlo(0, 100, 300, 100, 0.1, false);
     

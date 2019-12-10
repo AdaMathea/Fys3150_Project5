@@ -14,13 +14,16 @@ class SIRS {
         double N;
         double R;
 
+        //Variables
+        double t_;
+
         //Functions
         double dSdt(double, double);
         double dIdt(double, double);
         double dRdt(double, double);
         double a_t(double, double, double, double);
-        void rungekutta(double, double, double, double, double, bool);
-        void montecarlo(double, double, double, double, double, bool);
+        void rungekutta(double, double, double, double, double, char, bool, bool);
+        void montecarlo(double, double, double, double, double, char, bool, bool);
     
 };
 
