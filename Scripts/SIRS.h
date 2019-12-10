@@ -19,6 +19,7 @@ class SIRS {
         double dIdt(double, double);
         double dRdt(double, double);
         void rungekutta(double, double, double, double, double);
+        void montecarlo(double, double, double, double, double);
     
 };
 

@@ -18,7 +18,8 @@ int main()
     A->b = 1;
     A->c = 0.5;
 
-    A->rungekutta(0, 300, 100, 100, 0.1);
+    //A->rungekutta(0, 300, 100, 100, 0.1);
+    A->montecarlo(0, 100, 300, 100, 0.1);
     
     //cout << "B:" << endl;
 
@@ -29,7 +30,8 @@ int main()
     B->b = 2;
     B->c = 0.5;
 
-    B->rungekutta(0, 300, 100, 100, 0.1);
+    //B->rungekutta(0, 300, 100, 100, 0.1);
+    B->montecarlo(0, 100, 300, 100, 0.1);
 
     //cout << "C:" << endl;
 
@@ -40,7 +42,8 @@ int main()
     C->b = 3;
     C->c = 0.5;
 
-    C->rungekutta(0, 300, 100, 100, 0.1);
+    //C->rungekutta(0, 300, 100, 100, 0.1);
+    C->montecarlo(0, 100, 300, 100, 0.1);
 
     //cout << "D:" << endl;
 
@@ -51,7 +54,8 @@ int main()
     D->b = 4;
     D->c = 0.5;
 
-    D->rungekutta(0, 300, 100, 100, 0.1);
+    //D->rungekutta(0, 300, 100, 100, 0.1);
+    D->montecarlo(0, 100, 300, 100, 0.1);
     
 
     cout << A->S << " " << B->S << " " << C->S << " " << D->S << endl;

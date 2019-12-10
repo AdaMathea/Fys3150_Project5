@@ -44,6 +44,45 @@ double SIRS::dRdt(double t, double y) {
     }
 }
 
+void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h) {
+    this->S = S_0;
+    this->I = I_0;
+    this->R = this->N - this->S - this->I;
+
+    int n = (int)((t - t_0) / h); 
+    
+    random_device rd;  //Will be used to obtain a seed for the random number engine
+    mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+    uniform_real_distribution<double> dis(0, 1);
+
+    double delta_t = min(min(4/(this->a*this->N), 1/(this->b*this->N)), 1/(this->c*this->N));
+
+    for(int i=1; i <= n; i++) {
+        double p_si = this->a*this->S*this->I*delta_t/this->N;
+        double p_ir = this->b*this->I*delta_t;
+        double p_rs = this->c*this->R*delta_t;
+
+        if(dis(gen) < p_si) {
+            this->S -= 1;
+            this->I += 1;
+        }
+        else {
+        }
+        if(dis(gen) < p_ir) {
+            this->I -= 1;
+            this->R += 1;
+        }
+        else {
+        }
+        if(dis(gen) < p_rs) {
+            this->R -= 1;
+            this->S += 1;
+        }
+        else {
+        }
+    }
+}
+
 void SIRS::rungekutta(double t_0, double S_0, double I_0, double t, double h) 
 { 
     // Count number of iterations using step size or 
