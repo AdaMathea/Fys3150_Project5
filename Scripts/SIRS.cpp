@@ -66,9 +66,6 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, bo
         if(season = true) {
             this->a = a_t(2*M_PI/100, 4, 1, t_n);
         }
-        else {
-            this->a = this->a;
-        }
 
         double delta_t = min(min(4/(this->a*this->N), 1/(this->b*this->N)), 1/(this->c*this->N));
 
@@ -92,7 +89,7 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, bo
     }
 }
 
-void SIRS::rungekutta(double t_0, double S_0, double I_0, double t, double h) 
+void SIRS::rungekutta(double t_0, double S_0, double I_0, double t, double h, bool season) 
 { 
     // Count number of iterations using step size or 
     // step height h 
@@ -107,6 +104,9 @@ void SIRS::rungekutta(double t_0, double S_0, double I_0, double t, double h)
     // Iterate for number of iterations 
     for (int i=1; i<=n; i++) 
     { 
+        if(season = true) {
+            this->a = a_t(2*M_PI/100, 4, 1, t_0);
+        }
         // Apply Runge Kutta Formulas to find 
         // next value of y 
         double k1_S = h*this->dSdt(t_0, S); 
