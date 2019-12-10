@@ -3,37 +3,59 @@
 #include <iomanip>
 #include <cmath>
 
-#include <lib.h>
+#include <SIRS.h>
 
 using namespace std;
 
 int main()
 {
-    cout << "Setting up parameters" << endl;
+    //cout << "A:" << endl;
 
-    lib * Lib = new lib;
+    SIRS * A = new SIRS;
 
-    int N       = 10;
-    int t_0     = 0;
-    int t_1     = 10;
+    A->N = 400;
+    A->a = 4;
+    A->b = 1;
+    A->c = 0.5;
 
-    double t = t_0;
-    double h = t_1 - t_0 / (double) N;
+    A->rungekutta(0, 300, 100, 100, 0.1);
+    
+    //cout << "B:" << endl;
 
-    Lib->Set_up_lists(400, 300, 100, 400 - 300 - 100, N);
+    SIRS * B = new SIRS;
 
-    cout << "Starting Simulation" << endl;
+    B->N = 400;
+    B->a = 4;
+    B->b = 2;
+    B->c = 0.5;
 
-    for(int i = 0; i < N; i += h)
-    {
-        t += h;
+    B->rungekutta(0, 300, 100, 100, 0.1);
 
-        for(int j = 0; j < 4; j++)
-        {
-            Lib->RK4(t, h, i, j);
-        }
-        cout << Lib->S[i][0] << "     " << Lib->S[i][3] << endl;
-    }
+    //cout << "C:" << endl;
 
-    return 0;
+    SIRS * C = new SIRS;
+
+    C->N = 400;
+    C->a = 4;
+    C->b = 3;
+    C->c = 0.5;
+
+    C->rungekutta(0, 300, 100, 100, 0.1);
+
+    //cout << "D:" << endl;
+
+    SIRS * D = new SIRS;
+
+    D->N = 400;
+    D->a = 4;
+    D->b = 4;
+    D->c = 0.5;
+
+    D->rungekutta(0, 300, 100, 100, 0.1);
+    
+
+    cout << A->S << " " << B->S << " " << C->S << " " << D->S << endl;
+    cout << A->I << " " << B->I << " " << C->I << " " << D->I << endl;
+    cout << A->R << " " << B->R << " " << C->R << " " << D->R << endl;
+
 }
