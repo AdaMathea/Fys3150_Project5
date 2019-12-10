@@ -3,37 +3,24 @@
 #include <iomanip>
 #include <cmath>
 
-#include <lib.h>
+#include <SIRS.h>
 
 using namespace std;
 
 int main()
 {
-    cout << "Setting up parameters" << endl;
+    SIRS * sirs = new SIRS;
 
-    lib * Lib = new lib;
+    sirs->N = 400;
+    //sirs->S = 400;
+    //sirs->I = 100;
+    //sirs->R = 0
+    sirs->a = 4;
+    sirs->b = 1;
+    sirs->c = 0.5;
 
-    int N       = 10;
-    int t_0     = 0;
-    int t_1     = 10;
+    sirs->rungekutta(0, 300, 100, 100, 1);
 
-    double t = t_0;
-    double h = t_1 - t_0 / (double) N;
+    cout << sirs->S << endl;
 
-    Lib->Set_up_lists(400, 300, 100, 400 - 300 - 100, N);
-
-    cout << "Starting Simulation" << endl;
-
-    for(int i = 0; i < N; i += h)
-    {
-        t += h;
-
-        for(int j = 0; j < 4; j++)
-        {
-            Lib->RK4(t, h, i, j);
-        }
-        cout << Lib->S[i][0] << "     " << Lib->S[i][3] << endl;
-    }
-
-    return 0;
 }
