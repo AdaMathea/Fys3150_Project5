@@ -170,7 +170,7 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
     myfile.close();
 }
 
-void SIRS::rungekutta(double t_0, double S_0, double I_0, double t, double h, char letter, char Model, bool vital = false, bool season = false)
+void SIRS::rungekutta(double t_0, double S_0, double I_0, double t, double h, char letter, bool vital = false, bool season = false)
 { 
     // Count number of iterations using step size or 
     // step height h 
