@@ -9,6 +9,8 @@ class SIRS {
         double a;
         double b;
         double c;
+        double d;
+        double e;
         double S;
         double I;
         double N;
@@ -18,11 +20,11 @@ class SIRS {
         double t_;
 
         //Functions
-        double dSdt(double, double);
+        double dSdt(double, double, char);
         double dIdt(double, double);
         double dRdt(double, double);
         double a_t(double, double, double, double);
-        void rungekutta(double, double, double, double, double, char, bool, bool);
+        void rungekutta(double, double, double, double, double, char, char, bool, bool);
         void montecarlo(double, double, double, double, double, char, bool, bool);
     
 };

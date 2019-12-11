@@ -15,15 +15,15 @@ int main()
 
     A->N = 400;
     A->a = 4;
-    A->b = 1;
+    A->b = 4;
     A->c = 0.5;
 
-    A->rungekutta(0, 300, 100, 100, 0.1, 'A', true, false);
-    //A->montecarlo(0, 100, 300, 100, 0.1, true);
+    //A->rungekutta(0, 300, 100, 30, 0.1, 'A', 'S', false, false);
+    A->montecarlo(0, 100, 300, 100, 0.1, 'A', false, true);
     //A->montecarlo(0, 100, 300, 100, 0.1, false);
     
     //cout << "B:" << endl;
-
+    /*
     SIRS * B = new SIRS;
 
     B->N = 400;
@@ -31,7 +31,7 @@ int main()
     B->b = 2;
     B->c = 0.5;
 
-    B->rungekutta(0, 300, 100, 100, 0.1, 'B', true, false);
+    B->rungekutta(0, 300, 100, 100, 0.1, 'B', 'S', true, true);
     //B->montecarlo(0, 100, 300, 100, 0.1, true);
     //B->montecarlo(0, 100, 300, 100, 0.1, false);
 
@@ -44,7 +44,7 @@ int main()
     C->b = 3;
     C->c = 0.5;
 
-    C->rungekutta(0, 300, 100, 100, 0.1, 'C', true, false);
+    C->rungekutta(0, 300, 100, 100, 0.1, 'C', 'S', true, true);
     //C->montecarlo(0, 100, 300, 100, 0.1, true);
     //C->montecarlo(0, 100, 300, 100, 0.1, false);
 
@@ -57,13 +57,14 @@ int main()
     D->b = 4;
     D->c = 0.5;
 
-    D->rungekutta(0, 300, 100, 100, 0.1, 'D', true, false);
+    D->rungekutta(0, 300, 100, 100, 0.1, 'D', 'S', true, true);
+    */
     //D->montecarlo(0, 100, 300, 100, 0.1, true);
     //D->montecarlo(0, 100, 300, 100, 0.1, false);
     
 
-    cout << A->S << " " << B->S << " " << C->S << " " << D->S << endl;
-    cout << A->I << " " << B->I << " " << C->I << " " << D->I << endl;
-    cout << A->R << " " << B->R << " " << C->R << " " << D->R << endl;
+    //cout << A->S << " " << B->S << " " << C->S << " " << D->S << endl;
+    //cout << A->I << " " << B->I << " " << C->I << " " << D->I << endl;
+    //cout << A->R << " " << B->R << " " << C->R << " " << D->R << endl;
 
 }

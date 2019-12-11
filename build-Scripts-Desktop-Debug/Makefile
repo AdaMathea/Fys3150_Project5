@@ -52,9 +52,9 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../Scripts/lib.cpp \
+SOURCES       = ../Scripts/SIRS.cpp \
 		../Scripts/main.cpp 
-OBJECTS       = lib.o \
+OBJECTS       = SIRS.o \
 		main.o
 DIST          = /usr/lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/common/unix.conf \
@@ -127,6 +127,7 @@ DIST          = /usr/lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib64/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib64/qt5/mkspecs/features/spec_post.prf \
+		../Scripts/.qmake.stash \
 		/usr/lib64/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib64/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib64/qt5/mkspecs/features/default_pre.prf \
@@ -140,7 +141,7 @@ DIST          = /usr/lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib64/qt5/mkspecs/features/yacc.prf \
 		/usr/lib64/qt5/mkspecs/features/lex.prf \
-		../Scripts/Scripts.pro lib.h ../Scripts/lib.cpp \
+		../Scripts/Scripts.pro SIRS.h ../Scripts/SIRS.cpp \
 		../Scripts/main.cpp
 QMAKE_TARGET  = Scripts
 DESTDIR       = 
@@ -224,6 +225,7 @@ Makefile: ../Scripts/Scripts.pro /usr/lib64/qt5/mkspecs/linux-g++/qmake.conf /us
 		/usr/lib64/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib64/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib64/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib64/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib64/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib64/qt5/mkspecs/features/default_pre.prf \
@@ -310,6 +312,7 @@ Makefile: ../Scripts/Scripts.pro /usr/lib64/qt5/mkspecs/linux-g++/qmake.conf /us
 /usr/lib64/qt5/mkspecs/features/qt_config.prf:
 /usr/lib64/qt5/mkspecs/linux-g++/qmake.conf:
 /usr/lib64/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib64/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib64/qt5/mkspecs/features/toolchain.prf:
 /usr/lib64/qt5/mkspecs/features/default_pre.prf:
@@ -367,10 +370,10 @@ compiler_clean:
 
 ####### Compile
 
-lib.o: ../Scripts/lib.cpp ../Scripts/lib.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o lib.o ../Scripts/lib.cpp
+SIRS.o: ../Scripts/SIRS.cpp ../Scripts/SIRS.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SIRS.o ../Scripts/SIRS.cpp
 
-main.o: ../Scripts/main.cpp ../Scripts/lib.h
+main.o: ../Scripts/main.cpp ../Scripts/SIRS.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Scripts/main.cpp
 
 ####### Install
