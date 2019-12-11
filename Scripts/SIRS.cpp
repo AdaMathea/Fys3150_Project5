@@ -193,6 +193,7 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
     {
         myfile.open(filename, ios::app);
     }
+    
     myfile << letter << endl << "t S I R" << endl;
     myfile << t_ << " " << S << " " << I << " " << R << endl;
 
