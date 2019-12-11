@@ -112,7 +112,7 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
     I = I_0;
 
     // Open file to save values
-    string filename = "5g.txt";
+    string filename = "5i.txt";
 
     ofstream myfile;
     if (letter == 'A')
@@ -133,6 +133,7 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
         {
             a = a_t(2 * M_PI / 100, 4, 2, t_);
         }
+
         // Apply Runge Kutta Formulas to find
         // next value of y
         double k1_S = h * this->dSdt(t_0, S, vital);
@@ -156,7 +157,18 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
         I += (1.0/6.0) * (k1_I + 2 * k2_I + 2 * k3_I + k4_I);
         R += (1.0/6.0) * (k1_R + 2 * k2_R + 2 * k3_R + k4_R);
 
-        //cout << S << endl;
+        if(S < 0.5)
+        {
+            S = 0;
+        }
+        if(I < 0.5)
+        {
+            I = 0;
+        }
+        if(R < 0.5)
+        {
+            R = 0;
+        }
 
         // Update next value of t
         t_ = t_ + h;
@@ -173,7 +185,7 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
     I = I_0;
     R = N - S - I;
 
-    string filename = "5h.txt";
+    string filename = "5j.txt";
 
     int n = (int)((t - t_0) / h);
 

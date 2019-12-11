@@ -13,7 +13,7 @@ int main()
 
     A->N = 400;
     A->a = 4;
-    A->b = 4;
+    A->b = 1;
     A->c = 0.5;
     A->d = 0.006;
     A->dI = 0.002;
@@ -23,10 +23,10 @@ int main()
     //A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, false);
     //A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, true);
     A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, true);
-    //A->montecarlo(0, 100, 300, 100, 0.1, 'A', false, false);
+    A->montecarlo(0, 100, 300, 100, 0.1, 'A', false, false);
     //A->montecarlo(0, 100, 300, 100, 0.1, 'A', true, false);
     //A->montecarlo(0, 100, 300, 100, 0.1, 'A', false, true);
-    A->montecarlo(0, 100, 300, 100, 0.1, 'A', true, true);
+    //A->montecarlo(0, 100, 300, 100, 0.1, 'A', true, true);
 
     SIRS * B = new SIRS;
 
@@ -42,10 +42,10 @@ int main()
     //B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, false);
     //B->rungekutta(0, 100, 300, 100, 0.1, 'B', false, true);
     B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, true);
-    //B->montecarlo(0, 100, 300, 100, 0.1, 'B', false, false);
+    B->montecarlo(0, 100, 300, 100, 0.1, 'B', false, false);
     //B->montecarlo(0, 100, 300, 100, 0.1, 'B', true, false);
     //B->montecarlo(0, 100, 300, 100, 0.1, 'B', false, true);
-    B->montecarlo(0, 100, 300, 100, 0.1, 'B', true, true);
+    //B->montecarlo(0, 100, 300, 100, 0.1, 'B', true, true);
 
     SIRS * C = new SIRS;
 
@@ -61,10 +61,10 @@ int main()
     //C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, false);
     //C->rungekutta(0, 100, 300, 100, 0.1, 'C', false, true);
     C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, true);
-    //C->montecarlo(0, 100, 300, 100, 0.1, 'C', false, false);
+    C->montecarlo(0, 100, 300, 100, 0.1, 'C', false, false);
     //C->montecarlo(0, 100, 300, 100, 0.1, 'C', true, false);
     //C->montecarlo(0, 100, 300, 100, 0.1, 'C', false, true);
-    C->montecarlo(0, 100, 300, 100, 0.1, 'C', true, true);
+    //C->montecarlo(0, 100, 300, 100, 0.1, 'C', true, true);
 
     SIRS * D = new SIRS;
 
@@ -80,8 +80,8 @@ int main()
     //D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, false);
     //D->rungekutta(0, 100, 300, 100, 0.1, 'D', false, true);
     D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, true);
-    //D->montecarlo(0, 100, 300, 100, 0.1, 'D', false, false);
+    D->montecarlo(0, 100, 300, 100, 0.1, 'D', false, false);
     //D->montecarlo(0, 100, 300, 100, 0.1, 'D', true, false);
     //D->montecarlo(0, 100, 300, 100, 0.1, 'D', false, true);
-    D->montecarlo(0, 100, 300, 100, 0.1, 'D', true, true);
+    //D->montecarlo(0, 100, 300, 100, 0.1, 'D', true, true);
 }
