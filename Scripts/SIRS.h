@@ -19,6 +19,7 @@ class SIRS {
 
         //Variables
         double t_;
+        bool test = false;
 
         //Functions
         double dSdt(double, double, bool);

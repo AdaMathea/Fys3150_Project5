@@ -5,7 +5,9 @@ CONFIG -= qt
 
 SOURCES += \
         SIRS.cpp \
-        main.cpp
+        main.cpp \
+        tests.cpp
 
 HEADERS += \
-    SIRS.h
+    SIRS.h \
+    tests.h

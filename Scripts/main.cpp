@@ -4,11 +4,30 @@
 #include <cmath>
 
 #include <SIRS.h>
+#include <tests.h>
 
 using namespace std;
 
 int main()
 {
+    string temp = "a";
+    while(temp != "J" and temp != "N")
+    {
+        cout << "Kjør tester? [J/N]" << endl;
+        cin >> temp;
+    }
+
+    if(temp == "J")
+    {
+        bool resultat;
+        tests * Tests = new tests;
+        resultat = Tests->Run_Tests();
+        if(resultat == false)
+        {
+            return 0;
+        }
+    }
+
     SIRS * A = new SIRS;
 
     A->N = 400;
@@ -19,10 +38,10 @@ int main()
     A->dI = 0.002;
     A->e = 0.012;
 
-    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, false);
+    A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, false);
     //A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, false);
     //A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, true);
-    A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, true);
+    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, true);
     A->montecarlo(0, 100, 300, 100, 0.1, 'A', false, false);
     //A->montecarlo(0, 100, 300, 100, 0.1, 'A', true, false);
     //A->montecarlo(0, 100, 300, 100, 0.1, 'A', false, true);
@@ -38,10 +57,10 @@ int main()
     B->dI = 0.002;
     B->e = 0.012;
 
-    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', false, false);
+    B->rungekutta(0, 100, 300, 100, 0.1, 'B', false, false);
     //B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, false);
     //B->rungekutta(0, 100, 300, 100, 0.1, 'B', false, true);
-    B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, true);
+    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, true);
     B->montecarlo(0, 100, 300, 100, 0.1, 'B', false, false);
     //B->montecarlo(0, 100, 300, 100, 0.1, 'B', true, false);
     //B->montecarlo(0, 100, 300, 100, 0.1, 'B', false, true);
@@ -57,10 +76,10 @@ int main()
     C->dI = 0.002;
     C->e = 0.012;
 
-    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', false, false);
+    C->rungekutta(0, 100, 300, 100, 0.1, 'C', false, false);
     //C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, false);
     //C->rungekutta(0, 100, 300, 100, 0.1, 'C', false, true);
-    C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, true);
+    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, true);
     C->montecarlo(0, 100, 300, 100, 0.1, 'C', false, false);
     //C->montecarlo(0, 100, 300, 100, 0.1, 'C', true, false);
     //C->montecarlo(0, 100, 300, 100, 0.1, 'C', false, true);
@@ -76,12 +95,14 @@ int main()
     D->dI = 0.002;
     D->e = 0.012;
 
-    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', false, false);
+    D->rungekutta(0, 100, 300, 100, 0.1, 'D', false, false);
     //D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, false);
     //D->rungekutta(0, 100, 300, 100, 0.1, 'D', false, true);
-    D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, true);
+    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, true);
     D->montecarlo(0, 100, 300, 100, 0.1, 'D', false, false);
     //D->montecarlo(0, 100, 300, 100, 0.1, 'D', true, false);
     //D->montecarlo(0, 100, 300, 100, 0.1, 'D', false, true);
     //D->montecarlo(0, 100, 300, 100, 0.1, 'D', true, true);
+
+    return 0;
 }

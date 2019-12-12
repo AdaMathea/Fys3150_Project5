@@ -101,32 +101,43 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
 { 
     // Count number of iterations using step size or 
     // step height h 
-    int n = (int)((t - t_0) / h); 
+    int n = (int)((t - t_0) / h);
 
     t_ = t_0;
 
     double k1_S, k2_S, k3_S, k4_S;
     double k1_I, k2_I, k3_I, k4_I;
+    double k1_R, k2_R, k3_R, k4_R;
 
+    if(N < S_0 + I_0)
+    {
+        cout << "N ble endret fra " << N << " til " << S_0 + I_0 << endl;;
+        N = S_0 + I_0;
+    }
     S = S_0;
     I = I_0;
+    R = N - S - I;
 
     // Open file to save values
-    string filename = "5i.txt";
-
     ofstream myfile;
-    if (letter == 'A')
-    {
-        myfile.open(filename);
-    }
-    else
-    {
-        myfile.open(filename, ios::app);
-    }
-    myfile << letter << endl << "t S I R" << endl;
-    myfile << t_ << " " << S << " " << I << " " << R << endl;
 
-    // Iterate for number of iterations 
+    if(test == false)
+    {
+        string filename = "5i.txt";
+
+        if (letter == 'A')
+        {
+            myfile.open(filename);
+        }
+        else
+        {
+            myfile.open(filename, ios::app);
+        }
+        myfile << letter << endl << "t S I R" << endl;
+        myfile << t_ << " " << S << " " << I << " " << R << endl;
+    }
+
+    // Iterate for number of iterations
     for (int i=1; i<=n; i++) 
     { 
         if(season == true)
@@ -136,27 +147,28 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
 
         // Apply Runge Kutta Formulas to find
         // next value of y
-        double k1_S = h * this->dSdt(t_0, S, vital);
-        double k1_I = h * this->dIdt(t_0, I, vital);
-        double k1_R = h * this->dRdt(t_0, R, vital);
+        k1_S = h * this->dSdt(t_0, S, vital);
+        k1_I = h * this->dIdt(t_0, I, vital);
+        k1_R = h * this->dRdt(t_0, R, vital);
 
-        double k2_S = h * this->dSdt(t_0 + 0.5*h, S + 0.5*k1_S, vital);
-        double k2_I = h * this->dIdt(t_0 + 0.5*h, I + 0.5*k1_I, vital);
-        double k2_R = h * this->dRdt(t_0 + 0.5*h, R + 0.5*k1_R, vital);
+        k2_S = h * this->dSdt(t_0 + 0.5*h, S + 0.5*k1_S, vital);
+        k2_I = h * this->dIdt(t_0 + 0.5*h, I + 0.5*k1_I, vital);
+        k2_R = h * this->dRdt(t_0 + 0.5*h, R + 0.5*k1_R, vital);
 
-        double k3_S = h * this->dSdt(t_0 + 0.5*h, S + 0.5*k2_S, vital);
-        double k3_I = h * this->dIdt(t_0 + 0.5*h, I + 0.5*k2_I, vital);
-        double k3_R = h * this->dRdt(t_0 + 0.5*h, R + 0.5*k2_R, vital);
+        k3_S = h * this->dSdt(t_0 + 0.5*h, S + 0.5*k2_S, vital);
+        k3_I = h * this->dIdt(t_0 + 0.5*h, I + 0.5*k2_I, vital);
+        k3_R = h * this->dRdt(t_0 + 0.5*h, R + 0.5*k2_R, vital);
 
-        double k4_S = h * this->dSdt(t_0 + h, S + k3_S, vital);
-        double k4_I = h * this->dIdt(t_0 + h, I + k3_I, vital);
-        double k4_R = h * this->dRdt(t_0 + h, R + k3_R, vital);
+        k4_S = h * this->dSdt(t_0 + h, S + k3_S, vital);
+        k4_I = h * this->dIdt(t_0 + h, I + k3_I, vital);
+        k4_R = h * this->dRdt(t_0 + h, R + k3_R, vital);
 
         // Update next value of y 
         S += (1.0/6.0) * (k1_S + 2 * k2_S + 2 * k3_S + k4_S);
         I += (1.0/6.0) * (k1_I + 2 * k2_I + 2 * k3_I + k4_I);
         R += (1.0/6.0) * (k1_R + 2 * k2_R + 2 * k3_R + k4_R);
 
+        // Round values under half a person to zeros to avoid zombies
         if(S < 0.5)
         {
             S = 0;
@@ -173,41 +185,57 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
         // Update next value of t
         t_ = t_ + h;
 
-        // Write to file
-        myfile << t_ << " " << S << " " << I << " " << R << endl;
+        if(test == false)
+        {
+            // Write to file
+            myfile << t_ << " " << S << " " << I << " " << R << endl;
+        }
     }
-    myfile << "-----------------------------------------" << endl;
-    myfile.close();
+
+    if(test == false)
+    {
+        myfile << "-----------------------------------------" << endl;
+        myfile.close();
+    }
 }
 
-void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, char letter, bool vital = false, bool season = false) {
+void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, char letter, bool vital = false, bool season = false)
+{
+    t_ = t_0;
+
+    if(N < S_0 + I_0)
+    {
+        cout << "N ble endret fra " << N << " til " << S_0 + I_0 << endl;;
+        N = S_0 + I_0;
+    }
+
     S = S_0;
     I = I_0;
     R = N - S - I;
-
-    string filename = "5j.txt";
-
-    int n = (int)((t - t_0) / h);
 
     random_device rd;  //Will be used to obtain a seed for the random number engine
     mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
     uniform_real_distribution<double> dis(0, 1);
 
-    t_ = t_0;
-
     // Open file to save values
     ofstream myfile;
-    if (letter == 'A')
+
+    if(test == false)
     {
-        myfile.open(filename);
+        string filename = "5j.txt";
+
+        if (letter == 'A')
+        {
+            myfile.open(filename);
+        }
+        else
+        {
+            myfile.open(filename, ios::app);
+        }
+
+        myfile << letter << endl << "t S I R" << endl;
+        myfile << t_ << " " << S << " " << I << " " << R << endl;
     }
-    else
-    {
-        myfile.open(filename, ios::app);
-    }
-    
-    myfile << letter << endl << "t S I R" << endl;
-    myfile << t_ << " " << S << " " << I << " " << R << endl;
 
     double p_si;
     double p_ir;
@@ -280,9 +308,15 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
 
         t_ += delta_t;
 
-        // Write to file
-        myfile << t_ << " " << S << " " << I << " " << R << endl;
+        if(test == false)
+        {
+            // Write to file
+            myfile << t_ << " " << S << " " << I << " " << R << endl;
+        }
     }
-    myfile << "-----------------------------------------" << endl;
-    myfile.close();
+    if(test == false)
+    {
+        myfile << "-----------------------------------------" << endl;
+        myfile.close();
+    }
 }
