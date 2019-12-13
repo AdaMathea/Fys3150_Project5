@@ -10,10 +10,12 @@ using namespace std;
 
 double SIRS::dSdt(double t, double y, bool vital = false)
 {
+    // A function calculating the growth of S
+
     if (vital == true)
     {
-        double value = c * R - (a * S * I) / N - d * S + e * N;
-        if(abs(value) < 1e-12)
+        double value = c * R - (a * S * I) / N - d * S + e * N; // The growth if vital dynamics is enabled
+        if(abs(value) < 1e-12)  // if the growth is really small, it is set to 0
         {
             return 0;
         }
@@ -24,7 +26,7 @@ double SIRS::dSdt(double t, double y, bool vital = false)
     }
     else
     {
-        double value = c * R - (a * S * I) / N;
+        double value = c * R - (a * S * I) / N; // The growth without vital dynamics
         if(abs(value) < 1e-12)
         {
             return 0;
@@ -34,13 +36,15 @@ double SIRS::dSdt(double t, double y, bool vital = false)
             return value;
         }
     }
-}
+} // end of dSdt
 
 double SIRS::dIdt(double t, double y, bool vital = false)
 {
+    // A function calculating the growth of I
+
     if (vital == true)
     {
-        double value = (a * S * I / N) - b * I - d * I - dI * I;
+        double value = (a * S * I / N) - b * I - d * I - dI * I;    // The growth if vital dynamics is enabled
         if(abs(value) < 1e-12)
         {
             return 0;
@@ -52,7 +56,7 @@ double SIRS::dIdt(double t, double y, bool vital = false)
     }
     else
     {
-        double value = (a * S * I / N) - b * I;
+        double value = (a * S * I / N) - b * I; // The growth without vital dynamics
         if(abs(value) < 1e-12)
         {
             return 0;
@@ -62,13 +66,15 @@ double SIRS::dIdt(double t, double y, bool vital = false)
             return value;
         }
     }
-}
+} // end of dIdt
 
 double SIRS::dRdt(double t, double y, bool vital = false)
 {
+    // A function calculating the growth of I
+
     if (vital == true)
     {
-        double value = b * I - c * R - d * R;
+        double value = b * I - c * R - d * R;   // The growth if vital dynamics is enabled
         if(abs(value) < 1e-12)
         {
             return 0;
@@ -80,7 +86,7 @@ double SIRS::dRdt(double t, double y, bool vital = false)
     }
     else
     {
-        double value = b * I - c * R;
+        double value = b * I - c * R;   // The growth without vital dynamics
         if(abs(value) < 1e-12)
         {
             return 0;
@@ -90,63 +96,79 @@ double SIRS::dRdt(double t, double y, bool vital = false)
             return value;
         }
     }
-}
+} // end of dRdt
 
 double SIRS::a_t(double omega, double a_0, double A, double t_n)
 {
+    // A function calculating the rate of infection if season dynamics are enabled
+
     return A * cos(omega * t_n) + a_0;
-}
+} // end of a_t
 
 void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, char letter, bool vital = false, bool season = false)
-{ 
-    // Count number of iterations using step size or 
-    // step height h 
-    int n = (int)((t - t_0) / h);
+{
+    /* Runge Kutta 4 solver for the SIRS modell
+     * It takes these parameters:
+       - t_0    = Time at the start of simulation
+       - t      = Time at the end of the simulation
+       - S_0    = Population susceptible at the start
+       - I_0    = Population infected at the start
+       - h      = Stepsize of simulation
+       - letter = Variable used to name the class when datarecording
+       - vital  = Enables vital dynamics
+       - season = Enables season variations
+     * Results can be found in the file created by this function
+     * or the last values can be found as this->S, this->I and this->R.
+    */
 
-    t_ = t_0;
+    int n = (int)((t - t_0) / h);   // Number of iterations using step size or step height h
+
+    t_ = t_0;   // Variable used to recorde time under simulation
 
     double k1_S, k2_S, k3_S, k4_S;
     double k1_I, k2_I, k3_I, k4_I;
     double k1_R, k2_R, k3_R, k4_R;
 
-    if(N < S_0 + I_0)
+    if(N < S_0 + I_0)   // Checking if the amount of people in S and I are less then or equal to the total population
     {
-        cout << "N ble endret fra " << N << " til " << S_0 + I_0 << endl;;
+        cout << "N ble endret fra " << N << " til " << S_0 + I_0 << endl;
         N = S_0 + I_0;
     }
+
+    // Initialising values
     S = S_0;
     I = I_0;
     R = N - S - I;
 
-    // Open file to save values
+    // Open and setting up file to save values if testing is not enabled
     ofstream myfile;
 
     if(test == false)
     {
         string filename = "5i.txt";
 
-        if (letter == 'A')
+        if (letter == 'A')  // Opens file at the beginning if letter equals A
         {
             myfile.open(filename);
         }
         else
         {
-            myfile.open(filename, ios::app);
+            myfile.open(filename, ios::app);    // Opens the file at the end else
         }
         myfile << letter << endl << "t S I R" << endl;
         myfile << t_ << " " << S << " " << I << " " << R << endl;
     }
 
-    // Iterate for number of iterations
+    // Iterate n times
     for (int i=1; i<=n; i++) 
     { 
         if(season == true)
         {
-            a = a_t(2 * M_PI / 100, 4, 2, t_);
+            a = a_t(2 * M_PI / 100, 4, 2, t_);  // Calculate the variating a if seasons are enabled
         }
 
-        // Apply Runge Kutta Formulas to find
-        // next value of y
+        // Apply Runge Kutta Formulas to find next value of y
+
         k1_S = h * this->dSdt(t_0, S, vital);
         k1_I = h * this->dIdt(t_0, I, vital);
         k1_R = h * this->dRdt(t_0, R, vital);
@@ -163,7 +185,7 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
         k4_I = h * this->dIdt(t_0 + h, I + k3_I, vital);
         k4_R = h * this->dRdt(t_0 + h, R + k3_R, vital);
 
-        // Update next value of y 
+        // Update next value of y
         S += (1.0/6.0) * (k1_S + 2 * k2_S + 2 * k3_S + k4_S);
         I += (1.0/6.0) * (k1_I + 2 * k2_I + 2 * k3_I + k4_I);
         R += (1.0/6.0) * (k1_R + 2 * k2_R + 2 * k3_R + k4_R);
@@ -187,32 +209,49 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
 
         if(test == false)
         {
-            // Write to file
+            // Write to file if test is not enabled
             myfile << t_ << " " << S << " " << I << " " << R << endl;
         }
     }
 
     if(test == false)
     {
+        // Marking the ende of this model in the result file
         myfile << "-----------------------------------------" << endl;
         myfile.close();
     }
-}
+} // end of rungekutta
 
 void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, char letter, bool vital = false, bool season = false)
 {
-    t_ = t_0;
+    /* Monte Carlo solver for the SIRS modell
+     * It takes these parameters:
+       - t_0    = Time at the start of simulation
+       - t      = Time at the end of the simulation
+       - S_0    = Population susceptible at the start
+       - I_0    = Population infected at the start
+       - h      = Not used
+       - letter = Variable used to name the class when datarecording
+       - vital  = Enables vital dynamics
+       - season = Enables season variations
+     * Results can be found in the file created by this function
+     * or the last values can be found as this->S, this->I and this->R.
+    */
 
-    if(N < S_0 + I_0)
+    t_ = t_0;   // Time variable
+
+    if(N < S_0 + I_0)   // Correcting N
     {
         cout << "N ble endret fra " << N << " til " << S_0 + I_0 << endl;;
         N = S_0 + I_0;
     }
 
+    // Initialising values
     S = S_0;
     I = I_0;
     R = N - S - I;
 
+    // Setting up the random number generator, giving us values from zeros to one
     random_device rd;  //Will be used to obtain a seed for the random number engine
     mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
     uniform_real_distribution<double> dis(0, 1);
@@ -222,7 +261,7 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
 
     if(test == false)
     {
-        string filename = "5j.txt";
+        string filename = "5j.txt"; // Opens different file then the Runge Kutta function
 
         if (letter == 'A')
         {
@@ -237,40 +276,43 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
         myfile << t_ << " " << S << " " << I << " " << R << endl;
     }
 
-    double p_si;
-    double p_ir;
-    double p_rs;
-    double p_sd;
-    double p_id;
-    double p_id_;
-    double p_rd;
-    double p_bs;
-    double delta_t;
+    // Sets up probability variables
+    double p_si;    // Probability of passing from S to I
+    double p_ir;    // Probability of passing from I to R
+    double p_rs;    // Probability of passing from R to S
+    double p_sd;    // Probability of S population dying
+    double p_id;    // Probability of I population dying
+    double p_id_;   // Probability of I population dying from the illness
+    double p_rd;    // Probability of R population dying
+    double p_bs;    // Probability of birth
+    double delta_t; // Timestep for this step of the simulation
 
-    while(t_ <= t)
+    // Simulates until the time variable is bigger than or equal to the end time.
+    while(t_ < t)
     {
         if(season == true)
         {
-            a = a_t(2 * M_PI / 100, 4, 2, t_);
+            a = a_t(2 * M_PI / 100, 4, 2, t_);  // Calculates the variable infection rate
         }
 
-        delta_t = min(min(4 / (a * N), 1 / (b * N)), 1 / (c * N));
+        delta_t = min(min(4 / (a * N), 1 / (b * N)), 1 / (c * N));  // Finds the timestep
 
+        // Callculates the probablities
         p_si = a * S * I * delta_t / N;
         p_ir = b * I * delta_t;
         p_rs = c * R * delta_t;
 
-        if(dis(gen) < p_si)
+        if(dis(gen) < p_si) // Randomly move person form S to I
         {
             S -= 1;
             I += 1;
         }
-        if(dis(gen) < p_ir)
+        if(dis(gen) < p_ir) // Randomly move person form I to R
         {
             I -= 1;
             R += 1;
         }
-        if(dis(gen) < p_rs)
+        if(dis(gen) < p_rs) // Randomly move person form R to S
         {
             R -= 1;
             S += 1;
@@ -278,35 +320,36 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
 
         if (vital == true)
         {
+            // Calculating more probabilities if vital is enabled
             p_sd    = delta_t * (d * S);
             p_id    = delta_t * (d * I);
             p_id_   = delta_t * (dI * I);
             p_rd    = delta_t * (d * R);
             p_bs    = delta_t * (e * N);
 
-            if(dis(gen) < p_sd)
+            if(dis(gen) < p_sd) // Randomly remove person form S
             {
                 S -= 1;
             }
-            if(dis(gen) < p_id)
+            if(dis(gen) < p_id) // Randomly remove person form I
             {
                 I -= 1;
             }
-            if(dis(gen) < p_id_)
+            if(dis(gen) < p_id_)    // Randomly remove person form I
             {
                 I -= 1;
             }
-            if(dis(gen) < p_rd)
+            if(dis(gen) < p_rd) // Randomly remove person form R
             {
                 R -= 1;
             }
-            if (dis(gen) < p_bs)
+            if (dis(gen) < p_bs)    // Randomly adding person form S
             {
                 S += 1;
             }
         }
 
-        t_ += delta_t;
+        t_ += delta_t;  // Updating time
 
         if(test == false)
         {
@@ -316,7 +359,8 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
     }
     if(test == false)
     {
+        // Separating models in result file
         myfile << "-----------------------------------------" << endl;
         myfile.close();
     }
-}
+} // end of montecarlo

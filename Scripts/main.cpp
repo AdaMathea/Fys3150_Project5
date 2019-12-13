@@ -10,42 +10,45 @@ using namespace std;
 
 int main()
 {
-    string temp = "a";
+    // Checks if we want to test the functions in the SIRS class
+    string temp = "temp";
     while(temp != "J" and temp != "N")
     {
-        cout << "Kjør tester? [J/N]" << endl;
+        cout << "Test functions of the SIRS class? [J/N]" << endl;
         cin >> temp;
     }
 
-    if(temp == "J")
+    if(temp == "J") // Runs tests if this is wanted
     {
         bool resultat;
         tests * Tests = new tests;
         resultat = Tests->Run_Tests();
         if(resultat == false)
         {
-            return 0;
+            return 0;   // Ends run if tests are not passed
         }
     }
 
+    // Sets up class A, B, C and D and runs them
+
     SIRS * A = new SIRS;
 
-    A->N = 400;
-    A->a = 4;
-    A->b = 1;
-    A->c = 0.5;
-    A->d = 0.006;
-    A->dI = 0.002;
-    A->e = 0.012;
+    A->N = 400;     // Total population
+    A->a = 4;       // rate of infection
+    A->b = 1;       // rate of recovery
+    A->c = 0.5;     // rate of immunity loss
+    A->d = 0.006;   // death rate
+    A->dI = 0.002;  // death rate due to illness
+    A->e = 0.012;   // birth rate
 
-    A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, false);
-    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, false);
-    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, true);
-    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, true);
-    A->montecarlo(0, 100, 300, 100, 0.1, 'A', false, false);
-    //A->montecarlo(0, 100, 300, 100, 0.1, 'A', true, false);
-    //A->montecarlo(0, 100, 300, 100, 0.1, 'A', false, true);
-    //A->montecarlo(0, 100, 300, 100, 0.1, 'A', true, true);
+    A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, false);    // Run of class A, solved by Runge Kutta 4 without vitality or seasons
+    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, false);   // Run of class A, solved by Runge Kutta 4 without seasons
+    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, true);   // Run of class A, solved by Runge Kutta 4 without vitality
+    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, true);    // Run of class A, solved by Runge Kutta 4 with vitality and seasons
+    A->montecarlo(0, 100, 300, 100, 0.1, 'A', false, false);    // Run of class A, solved by Monte Carlo without vitality or seasons
+    //A->montecarlo(0, 100, 300, 100, 0.1, 'A', true, false);   // Run of class A, solved by Monte Carlo without seasons
+    //A->montecarlo(0, 100, 300, 100, 0.1, 'A', false, true);   // Run of class A, solved by Monte Carlo without vitality
+    //A->montecarlo(0, 100, 300, 100, 0.1, 'A', true, true);    // Run of class A, solved by Monte Carlo with vitality and seasons
 
     SIRS * B = new SIRS;
 
@@ -57,14 +60,14 @@ int main()
     B->dI = 0.002;
     B->e = 0.012;
 
-    B->rungekutta(0, 100, 300, 100, 0.1, 'B', false, false);
-    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, false);
-    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', false, true);
-    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, true);
-    B->montecarlo(0, 100, 300, 100, 0.1, 'B', false, false);
-    //B->montecarlo(0, 100, 300, 100, 0.1, 'B', true, false);
-    //B->montecarlo(0, 100, 300, 100, 0.1, 'B', false, true);
-    //B->montecarlo(0, 100, 300, 100, 0.1, 'B', true, true);
+    B->rungekutta(0, 100, 300, 100, 0.1, 'B', false, false);    // Run of class B, solved by Runge Kutta 4 without vitality or seasons
+    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, false);   // Run of class B, solved by Runge Kutta 4 without seasons
+    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', false, true);   // Run of class B, solved by Runge Kutta 4 without vitality
+    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, true);    // Run of class B, solved by Runge Kutta 4 with vitality and seasons
+    B->montecarlo(0, 100, 300, 100, 0.1, 'B', false, false);    // Run of class B, solved by Monte Carlo without vitality or seasons
+    //B->montecarlo(0, 100, 300, 100, 0.1, 'B', true, false);   // Run of class B, solved by Monte Carlo without seasons
+    //B->montecarlo(0, 100, 300, 100, 0.1, 'B', false, true);   // Run of class B, solved by Monte Carlo without vitality
+    //B->montecarlo(0, 100, 300, 100, 0.1, 'B', true, true);    // Run of class B, solved by Monte Carlo with vitality and seasons
 
     SIRS * C = new SIRS;
 
@@ -76,14 +79,14 @@ int main()
     C->dI = 0.002;
     C->e = 0.012;
 
-    C->rungekutta(0, 100, 300, 100, 0.1, 'C', false, false);
-    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, false);
-    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', false, true);
-    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, true);
-    C->montecarlo(0, 100, 300, 100, 0.1, 'C', false, false);
-    //C->montecarlo(0, 100, 300, 100, 0.1, 'C', true, false);
-    //C->montecarlo(0, 100, 300, 100, 0.1, 'C', false, true);
-    //C->montecarlo(0, 100, 300, 100, 0.1, 'C', true, true);
+    C->rungekutta(0, 100, 300, 100, 0.1, 'C', false, false);    // Run of class C, solved by Runge Kutta 4 without vitality or seasons
+    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, false);   // Run of class C, solved by Runge Kutta 4 without seasons
+    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', false, true);   // Run of class C, solved by Runge Kutta 4 without vitality
+    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, true);    // Run of class C, solved by Runge Kutta 4 with vitality and seasons
+    C->montecarlo(0, 100, 300, 100, 0.1, 'C', false, false);    // Run of class C, solved by Monte Carlo without vitality or seasons
+    //C->montecarlo(0, 100, 300, 100, 0.1, 'C', true, false);   // Run of class C, solved by Monte Carlo without seasons
+    //C->montecarlo(0, 100, 300, 100, 0.1, 'C', false, true);   // Run of class C, solved by Monte Carlo without vitality
+    //C->montecarlo(0, 100, 300, 100, 0.1, 'C', true, true);    // Run of class C, solved by Monte Carlo with vitality and seasons
 
     SIRS * D = new SIRS;
 
@@ -95,14 +98,14 @@ int main()
     D->dI = 0.002;
     D->e = 0.012;
 
-    D->rungekutta(0, 100, 300, 100, 0.1, 'D', false, false);
-    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, false);
-    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', false, true);
-    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, true);
-    D->montecarlo(0, 100, 300, 100, 0.1, 'D', false, false);
-    //D->montecarlo(0, 100, 300, 100, 0.1, 'D', true, false);
-    //D->montecarlo(0, 100, 300, 100, 0.1, 'D', false, true);
-    //D->montecarlo(0, 100, 300, 100, 0.1, 'D', true, true);
+    D->rungekutta(0, 100, 300, 100, 0.1, 'D', false, false);    // Run of class D, solved by Runge Kutta 4 without vitality or seasons
+    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, false);   // Run of class D, solved by Runge Kutta 4 without seasons
+    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', false, true);   // Run of class D, solved by Runge Kutta 4 without vitality
+    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, true);    // Run of class D, solved by Runge Kutta 4 with vitality and seasons
+    D->montecarlo(0, 100, 300, 100, 0.1, 'D', false, false);    // Run of class D, solved by Monte Carlo without vitality or seasons
+    //D->montecarlo(0, 100, 300, 100, 0.1, 'D', true, false);   // Run of class D, solved by Monte Carlo without seasons
+    //D->montecarlo(0, 100, 300, 100, 0.1, 'D', false, true);   // Run of class D, solved by Monte Carlo without vitality
+    //D->montecarlo(0, 100, 300, 100, 0.1, 'D', true, true);    // Run of class D, solved by Monte Carlo with vitality and seasons
 
     return 0;
 }
