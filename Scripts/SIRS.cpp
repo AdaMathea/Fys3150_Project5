@@ -24,7 +24,7 @@ double SIRS::dSdt(double t, double y, bool vital = false)
     }
     else
     {
-        double value = c * (N - S - I) - (a * S * I) / N;
+        double value = c * R - (a * S * I) / N;
         if(abs(value) < 1e-12)
         {
             return 0;
@@ -80,7 +80,15 @@ double SIRS::dRdt(double t, double y, bool vital = false)
     }
     else
     {
-        return 1;
+        double value = b * I - c * R;
+        if(abs(value) < 1e-12)
+        {
+            return 0;
+        }
+        else
+        {
+            return value;
+        }
     }
 }
 
@@ -89,61 +97,168 @@ double SIRS::a_t(double omega, double a_0, double A, double t_n)
     return A * cos(omega * t_n) + a_0;
 }
 
-void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, char letter, bool vital = false, bool season = false) {
+void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, char letter, bool vital = false, bool season = false)
+{ 
+    // Count number of iterations using step size or 
+    // step height h 
+    int n = (int)((t - t_0) / h);
+
+    t_ = t_0;
+
+    double k1_S, k2_S, k3_S, k4_S;
+    double k1_I, k2_I, k3_I, k4_I;
+    double k1_R, k2_R, k3_R, k4_R;
+
+    if(N < S_0 + I_0)
+    {
+        cout << "N ble endret fra " << N << " til " << S_0 + I_0 << endl;;
+        N = S_0 + I_0;
+    }
     S = S_0;
     I = I_0;
     R = N - S - I;
 
-    int n = (int)((t - t_0) / h); 
-    
+    // Open file to save values
+    ofstream myfile;
+
+    if(test == false)
+    {
+        string filename = "5i.txt";
+
+        if (letter == 'A')
+        {
+            myfile.open(filename);
+        }
+        else
+        {
+            myfile.open(filename, ios::app);
+        }
+        myfile << letter << endl << "t S I R" << endl;
+        myfile << t_ << " " << S << " " << I << " " << R << endl;
+    }
+
+    // Iterate for number of iterations
+    for (int i=1; i<=n; i++) 
+    { 
+        if(season == true)
+        {
+            a = a_t(2 * M_PI / 100, 4, 2, t_);
+        }
+
+        // Apply Runge Kutta Formulas to find
+        // next value of y
+        k1_S = h * this->dSdt(t_0, S, vital);
+        k1_I = h * this->dIdt(t_0, I, vital);
+        k1_R = h * this->dRdt(t_0, R, vital);
+
+        k2_S = h * this->dSdt(t_0 + 0.5*h, S + 0.5*k1_S, vital);
+        k2_I = h * this->dIdt(t_0 + 0.5*h, I + 0.5*k1_I, vital);
+        k2_R = h * this->dRdt(t_0 + 0.5*h, R + 0.5*k1_R, vital);
+
+        k3_S = h * this->dSdt(t_0 + 0.5*h, S + 0.5*k2_S, vital);
+        k3_I = h * this->dIdt(t_0 + 0.5*h, I + 0.5*k2_I, vital);
+        k3_R = h * this->dRdt(t_0 + 0.5*h, R + 0.5*k2_R, vital);
+
+        k4_S = h * this->dSdt(t_0 + h, S + k3_S, vital);
+        k4_I = h * this->dIdt(t_0 + h, I + k3_I, vital);
+        k4_R = h * this->dRdt(t_0 + h, R + k3_R, vital);
+
+        // Update next value of y 
+        S += (1.0/6.0) * (k1_S + 2 * k2_S + 2 * k3_S + k4_S);
+        I += (1.0/6.0) * (k1_I + 2 * k2_I + 2 * k3_I + k4_I);
+        R += (1.0/6.0) * (k1_R + 2 * k2_R + 2 * k3_R + k4_R);
+
+        // Round values under half a person to zeros to avoid zombies
+        if(S < 0.5)
+        {
+            S = 0;
+        }
+        if(I < 0.5)
+        {
+            I = 0;
+        }
+        if(R < 0.5)
+        {
+            R = 0;
+        }
+
+        // Update next value of t
+        t_ = t_ + h;
+
+        if(test == false)
+        {
+            // Write to file
+            myfile << t_ << " " << S << " " << I << " " << R << endl;
+        }
+    }
+
+    if(test == false)
+    {
+        myfile << "-----------------------------------------" << endl;
+        myfile.close();
+    }
+}
+
+void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, char letter, bool vital = false, bool season = false)
+{
+    t_ = t_0;
+
+    if(N < S_0 + I_0)
+    {
+        cout << "N ble endret fra " << N << " til " << S_0 + I_0 << endl;;
+        N = S_0 + I_0;
+    }
+
+    S = S_0;
+    I = I_0;
+    R = N - S - I;
+
     random_device rd;  //Will be used to obtain a seed for the random number engine
     mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
     uniform_real_distribution<double> dis(0, 1);
 
-    t_ = t_0;
-
     // Open file to save values
     ofstream myfile;
-    if (letter == 'A')
-    {
-        myfile.open("5b.txt");
-    }
-    else
-    {
-        myfile.open("5b.txt", ios::app);
-    }
-    myfile << letter << endl << "t S I R" << endl;
-    myfile << t_ << " " << S << " " << I << " " << R << endl;
 
-    for(int i=1; i <= n; i++)
+    if(test == false)
     {
-        double p_si;
-        double p_ir;
-        double p_rs;
-        double delta_t;
+        string filename = "5j.txt";
 
-        if(season == true)
+        if (letter == 'A')
         {
-            a = a_t(2 * M_PI / 100, 4, 1, t_);
+            myfile.open(filename);
         }
-
-        if (vital == true)
-        {
-            delta_t = min(min(4 / (a * N), 1 / (b * N)), 1 / (c * N));
-
-            p_si = delta_t * (a * S * I / N - d * S);
-            p_ir = delta_t * (b * I - d * I - dI * I);
-            p_rs = delta_t * (c * R - d * R);
-        }
-
         else
         {
-            delta_t = min(min(4 / (a * N), 1 / (b * N)), 1 / (c * N));
-
-            p_si = a * S * I * delta_t / N;
-            p_ir = b * I * delta_t;
-            p_rs = c * R * delta_t;
+            myfile.open(filename, ios::app);
         }
+
+        myfile << letter << endl << "t S I R" << endl;
+        myfile << t_ << " " << S << " " << I << " " << R << endl;
+    }
+
+    double p_si;
+    double p_ir;
+    double p_rs;
+    double p_sd;
+    double p_id;
+    double p_id_;
+    double p_rd;
+    double p_bs;
+    double delta_t;
+
+    while(t_ <= t)
+    {
+        if(season == true)
+        {
+            a = a_t(2 * M_PI / 100, 4, 2, t_);
+        }
+
+        delta_t = min(min(4 / (a * N), 1 / (b * N)), 1 / (c * N));
+
+        p_si = a * S * I * delta_t / N;
+        p_ir = b * I * delta_t;
+        p_rs = c * R * delta_t;
 
         if(dis(gen) < p_si)
         {
@@ -161,79 +276,47 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
             S += 1;
         }
 
+        if (vital == true)
+        {
+            p_sd    = delta_t * (d * S);
+            p_id    = delta_t * (d * I);
+            p_id_   = delta_t * (dI * I);
+            p_rd    = delta_t * (d * R);
+            p_bs    = delta_t * (e * N);
+
+            if(dis(gen) < p_sd)
+            {
+                S -= 1;
+            }
+            if(dis(gen) < p_id)
+            {
+                I -= 1;
+            }
+            if(dis(gen) < p_id_)
+            {
+                I -= 1;
+            }
+            if(dis(gen) < p_rd)
+            {
+                R -= 1;
+            }
+            if (dis(gen) < p_bs)
+            {
+                S += 1;
+            }
+        }
+
         t_ += delta_t;
 
-        // Write to file
-        myfile << t_ << " " << S << " " << I << " " << R << endl;
-    }
-    myfile << "------------------------------" << endl;
-    myfile.close();
-}
-
-void SIRS::rungekutta(double t_0, double S_0, double I_0, double t, double h, char letter, bool vital = false, bool season = false)
-{ 
-    // Count number of iterations using step size or 
-    // step height h 
-    int n = (int)((t - t_0) / h); 
-
-    t_ = t_0;
-
-    S = S_0;
-    I = I_0;
-
-    // Open file to save values
-    ofstream myfile;
-    if (letter == 'A')
-    {
-        myfile.open("5a.txt");
-    }
-    else
-    {
-        myfile.open("5a.txt", ios::app);
-    }
-    
-    myfile << letter << endl << "t S I R" << endl;
-    myfile << t_ << " " << S << " " << I << " " << R << endl;
-
-    // Iterate for number of iterations 
-    for (int i=1; i<=n; i++) 
-    { 
-        if(season == true)
+        if(test == false)
         {
-            a = a_t(2 * M_PI / 100, 4, 1, t_);
+            // Write to file
+            myfile << t_ << " " << S << " " << I << " " << R << endl;
         }
-        // Apply Runge Kutta Formulas to find
-        // next value of y
-        double k1_S = h * this->dSdt(t_0, S);
-        double k1_I = h * this->dIdt(t_0, I);
-        double k1_R = h * this->dRdt(t_0, R);
-
-        double k2_S = h * this->dSdt(t_0 + 0.5*h, S + 0.5*k1_S);
-        double k2_I = h * this->dIdt(t_0 + 0.5*h, I + 0.5*k1_I);
-        double k2_R = h * this->dRdt(t_0 + 0.5*h, R + 0.5*k1_R);
-
-        double k3_S = h * this->dSdt(t_0 + 0.5*h, S + 0.5*k2_S);
-        double k3_I = h * this->dIdt(t_0 + 0.5*h, I + 0.5*k2_I);
-        double k3_R = h * this->dRdt(t_0 + 0.5*h, R + 0.5*k2_R);
-
-        double k4_S = h * this->dSdt(t_0 + h, S + k3_S);
-        double k4_I = h * this->dIdt(t_0 + h, I + k3_I);
-        double k4_R = h * this->dRdt(t_0 + h, R + k3_R);
-
-        // Update next value of y 
-        S += (1.0/6.0) * (k1_S + 2 * k2_S + 2 * k3_S + k4_S);
-        I += (1.0/6.0) * (k1_I + 2 * k2_I + 2 * k3_I + k4_I);
-        R += (1.0/6.0) * (k1_R + 2 * k2_R + 2 * k3_R + k4_R);
-
-        //cout << S << endl;
-        // Update next value of t
-        t_ = t_ + h;
-
-        R = N - S - I;
-
-        // Write to file
-        myfile << t_ << " " << S << " " << I << " " << R << endl;
     }
-    myfile << "-----------------------------------------" << endl;
-    myfile.close();
+    if(test == false)
+    {
+        myfile << "-----------------------------------------" << endl;
+        myfile.close();
+    }
 }

@@ -53,9 +53,11 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../Scripts/SIRS.cpp \
-		../Scripts/main.cpp 
+		../Scripts/main.cpp \
+		../Scripts/tests.cpp 
 OBJECTS       = SIRS.o \
-		main.o
+		main.o \
+		tests.o
 DIST          = /home/torstein/Qt/5.13.0/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/torstein/Qt/5.13.0/gcc_64/mkspecs/common/unix.conf \
 		/home/torstein/Qt/5.13.0/gcc_64/mkspecs/common/linux.conf \
@@ -246,8 +248,10 @@ DIST          = /home/torstein/Qt/5.13.0/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/torstein/Qt/5.13.0/gcc_64/mkspecs/features/exceptions.prf \
 		/home/torstein/Qt/5.13.0/gcc_64/mkspecs/features/yacc.prf \
 		/home/torstein/Qt/5.13.0/gcc_64/mkspecs/features/lex.prf \
-		../Scripts/Scripts.pro SIRS.h ../Scripts/SIRS.cpp \
-		../Scripts/main.cpp
+		../Scripts/Scripts.pro SIRS.h \
+		tests.h ../Scripts/SIRS.cpp \
+		../Scripts/main.cpp \
+		../Scripts/tests.cpp
 QMAKE_TARGET  = Scripts
 DESTDIR       = 
 TARGET        = Scripts
@@ -688,8 +692,13 @@ compiler_clean:
 SIRS.o: ../Scripts/SIRS.cpp ../Scripts/SIRS.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SIRS.o ../Scripts/SIRS.cpp
 
-main.o: ../Scripts/main.cpp ../Scripts/SIRS.h
+main.o: ../Scripts/main.cpp ../Scripts/SIRS.h \
+		../Scripts/tests.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Scripts/main.cpp
+
+tests.o: ../Scripts/tests.cpp ../Scripts/tests.h \
+		../Scripts/SIRS.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tests.o ../Scripts/tests.cpp
 
 ####### Install
 
