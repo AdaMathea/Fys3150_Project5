@@ -27,7 +27,7 @@ class SIRS {
         double dRdt(double, double, bool);
         double a_t(double, double, double, double);
         void rungekutta(double, double, double, double, double, char, bool, bool);
-        void montecarlo(double, double, double, double, double, char, bool, bool);
+        void montecarlo(double, double, double, double, double, char, int, bool, bool);
     
 };
 

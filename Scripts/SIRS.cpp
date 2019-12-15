@@ -145,7 +145,7 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
 
     if(test == false)
     {
-        string filename = "5i.txt";
+        string filename = "5a.txt";
 
         if (letter == 'A')  // Opens file at the beginning if letter equals A
         {
@@ -222,7 +222,7 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
     }
 } // end of rungekutta
 
-void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, char letter, bool vital = false, bool season = false)
+void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, char letter, int cycle = 0, bool vital = false, bool season = false)
 {
     /* Monte Carlo solver for the SIRS modell
      * It takes these parameters:
@@ -261,7 +261,7 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
 
     if(test == false)
     {
-        string filename = "5j.txt"; // Opens different file then the Runge Kutta function
+        string filename = "5b" + to_string(cycle) + ".txt"; // Opens different file then the Runge Kutta function
 
         if (letter == 'A')
         {

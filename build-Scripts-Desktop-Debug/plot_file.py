@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 liste = ["A", "B", "C", "D", "t"]
 
@@ -11,6 +12,7 @@ dok = ["| %7s | %9s | %9s | %9s |"%("t", "S", "I", "R")]
 Filename = input("Navn på datafil som skal åpnes: ")
 Metode = input("Metode brukt for modelen: ")
 Fignum = eval(input("Første nummer på lagrede figurer: "))
+Plot_choice = input("Plot S, I, R separat? (y/n): ")
 
 i = 0
 with open(Filename, 'r') as infile:
@@ -28,6 +30,7 @@ with open(Filename, 'r') as infile:
             pass
         else:
             dok.append("| %7s | %9s | %9s | %9s |"%(temp[0], temp[1], temp[2], temp[3]))
+            print("t" + str(i))
             t[i].append(float(temp[0]))
             S[i].append(float(temp[1]))
             I[i].append(float(temp[2]))
@@ -40,35 +43,60 @@ with open(Filename, "w") as outfile:
     for line in dok:
         outfile.write("%s\n"%line)
 
-values_plotted = -1
-plt.figure()
-for i in range(len(t)):
-    plt.plot(t[i][0:values_plotted], S[i][0:values_plotted], label = "S_%s"%liste[i])
+values_plotted = 5000
+t_lim = 12
+t = np.array([np.array(i) for i in t])
+S = np.array([np.array(i) for i in S])
+I = np.array([np.array(i) for i in I])
+R = np.array([np.array(i) for i in R])
 
-plt.title("SIRS Model solved by %s"%Metode)
-plt.xlabel("Time")
-plt.ylabel("Susceptible")
-plt.legend()
-plt.savefig("Figure%02i.png"%Fignum)
 
-plt.figure()
-for i in range(len(t)):
-    plt.plot(t[i][0:values_plotted], I[i][0:values_plotted], label = "I_%s"%liste[i])
 
-plt.title("SIRS Model solved by %s"%Metode)
-plt.xlabel("Time")
-plt.ylabel("Infected")
-plt.legend()
-plt.savefig("Figure%02i.png"%(Fignum + 1))
+if Plot_choice == "y":
+    plt.figure()
+    for i in range(len(t)):
+        plt.plot(t[i][0:values_plotted], S[i][0:values_plotted], label = "S_%s"%liste[i])
 
-plt.figure()
-for i in range(len(t)):
-    plt.plot(t[i][0:values_plotted], R[i][0:values_plotted], label = "R_%s"%liste[i])
+    plt.title("SIRS Model solved by %s"%Metode)
+    plt.xlabel("Time")
+    plt.ylabel("Susceptible")
+    plt.legend()
+    plt.savefig("Figure%02i.png"%Fignum)
 
-plt.title("SIRS Model solved by %s"%Metode)
-plt.xlabel("Time")
-plt.ylabel("Recovered")
-plt.legend()
-plt.savefig("Figure%02i.png"%(Fignum + 2))
+    plt.figure()
+    for i in range(len(t)):
+        plt.plot(t[i][0:values_plotted], I[i][0:values_plotted], label = "I_%s"%liste[i])
 
-plt.show()
+    plt.title("SIRS Model solved by %s"%Metode)
+    plt.xlabel("Time")
+    plt.ylabel("Infected")
+    plt.legend()
+    plt.savefig("Figure%02i.png"%(Fignum + 1))
+
+    plt.figure()
+    for i in range(len(t)):
+        plt.plot(t[i][0:values_plotted], R[i][0:values_plotted], label = "R_%s"%liste[i])
+
+    plt.title("SIRS Model solved by %s"%Metode)
+    plt.xlabel("Time")
+    plt.ylabel("Recovered")
+    plt.legend()
+    plt.savefig("Figure%02i.png"%(Fignum + 2))
+
+    plt.show()
+
+elif Plot_choice == "n":
+    for i in range(len(t)):
+        plt.figure()
+        plt.plot(t[i][t[i] < t_lim], S[i][t[i] < t_lim], label = "S_%s"%liste[i])
+        plt.plot(t[i][t[i] < t_lim], I[i][t[i] < t_lim], label = "I_%s"%liste[i])
+        plt.plot(t[i][t[i] < t_lim], R[i][t[i] < t_lim], label = "R_%s"%liste[i])
+        plt.title("SIRS Model solved by %s"%Metode)
+        plt.xlabel("Time")
+        plt.ylabel("Population")
+        plt.legend()
+        plt.savefig(f"Figure{Fignum + i}.png")
+    plt.show()
+
+else:
+    raise(Exception("Plot_choice must be y or n"))

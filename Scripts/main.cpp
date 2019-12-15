@@ -45,10 +45,13 @@ int main()
     //A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, false);   // Run of class A, solved by Runge Kutta 4 without seasons
     //A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, true);   // Run of class A, solved by Runge Kutta 4 without vitality
     //A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, true);    // Run of class A, solved by Runge Kutta 4 with vitality and seasons
-    A->montecarlo(0, 100, 300, 100, 0.1, 'A', false, false);    // Run of class A, solved by Monte Carlo without vitality or seasons
-    //A->montecarlo(0, 100, 300, 100, 0.1, 'A', true, false);   // Run of class A, solved by Monte Carlo without seasons
-    //A->montecarlo(0, 100, 300, 100, 0.1, 'A', false, true);   // Run of class A, solved by Monte Carlo without vitality
-    //A->montecarlo(0, 100, 300, 100, 0.1, 'A', true, true);    // Run of class A, solved by Monte Carlo with vitality and seasons
+    for(int i = 0; i < 6; i++) {
+        cout << "a" << endl;
+        A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, false, false);    // Run of class A, solved by Monte Carlo without vitality or seasons
+        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', true, false);   // Run of class A, solved by Monte Carlo without seasons
+        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', false, true);   // Run of class A, solved by Monte Carlo without vitality
+        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', true, true);    // Run of class A, solved by Monte Carlo with vitality and seasons
+    }
 
     SIRS * B = new SIRS;
 
@@ -64,10 +67,13 @@ int main()
     //B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, false);   // Run of class B, solved by Runge Kutta 4 without seasons
     //B->rungekutta(0, 100, 300, 100, 0.1, 'B', false, true);   // Run of class B, solved by Runge Kutta 4 without vitality
     //B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, true);    // Run of class B, solved by Runge Kutta 4 with vitality and seasons
-    B->montecarlo(0, 100, 300, 100, 0.1, 'B', false, false);    // Run of class B, solved by Monte Carlo without vitality or seasons
-    //B->montecarlo(0, 100, 300, 100, 0.1, 'B', true, false);   // Run of class B, solved by Monte Carlo without seasons
-    //B->montecarlo(0, 100, 300, 100, 0.1, 'B', false, true);   // Run of class B, solved by Monte Carlo without vitality
-    //B->montecarlo(0, 100, 300, 100, 0.1, 'B', true, true);    // Run of class B, solved by Monte Carlo with vitality and seasons
+    for(int i = 0; i < 6; i++) {
+        cout << "b" << endl;
+        B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, false, false);    // Run of class B, solved by Monte Carlo without vitality or seasons
+        //B->montecarlo(0, 100, 300, 100, 0.1, 'B', true, false);   // Run of class B, solved by Monte Carlo without seasons
+        //B->montecarlo(0, 100, 300, 100, 0.1, 'B', false, true);   // Run of class B, solved by Monte Carlo without vitality
+        //B->montecarlo(0, 100, 300, 100, 0.1, 'B', true, true);    // Run of class B, solved by Monte Carlo with vitality and seasons
+    }
 
     SIRS * C = new SIRS;
 
@@ -83,10 +89,13 @@ int main()
     //C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, false);   // Run of class C, solved by Runge Kutta 4 without seasons
     //C->rungekutta(0, 100, 300, 100, 0.1, 'C', false, true);   // Run of class C, solved by Runge Kutta 4 without vitality
     //C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, true);    // Run of class C, solved by Runge Kutta 4 with vitality and seasons
-    C->montecarlo(0, 100, 300, 100, 0.1, 'C', false, false);    // Run of class C, solved by Monte Carlo without vitality or seasons
-    //C->montecarlo(0, 100, 300, 100, 0.1, 'C', true, false);   // Run of class C, solved by Monte Carlo without seasons
-    //C->montecarlo(0, 100, 300, 100, 0.1, 'C', false, true);   // Run of class C, solved by Monte Carlo without vitality
-    //C->montecarlo(0, 100, 300, 100, 0.1, 'C', true, true);    // Run of class C, solved by Monte Carlo with vitality and seasons
+    for(int i = 0; i < 6; i++) {
+        cout << "c" << endl;
+        C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, false, false);    // Run of class C, solved by Monte Carlo without vitality or seasons
+        //C->montecarlo(0, 100, 300, 100, 0.1, 'C', true, false);   // Run of class C, solved by Monte Carlo without seasons
+        //C->montecarlo(0, 100, 300, 100, 0.1, 'C', false, true);   // Run of class C, solved by Monte Carlo without vitality
+        //C->montecarlo(0, 100, 300, 100, 0.1, 'C', true, true);    // Run of class C, solved by Monte Carlo with vitality and seasons
+    }
 
     SIRS * D = new SIRS;
 
@@ -102,10 +111,12 @@ int main()
     //D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, false);   // Run of class D, solved by Runge Kutta 4 without seasons
     //D->rungekutta(0, 100, 300, 100, 0.1, 'D', false, true);   // Run of class D, solved by Runge Kutta 4 without vitality
     //D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, true);    // Run of class D, solved by Runge Kutta 4 with vitality and seasons
-    D->montecarlo(0, 100, 300, 100, 0.1, 'D', false, false);    // Run of class D, solved by Monte Carlo without vitality or seasons
-    //D->montecarlo(0, 100, 300, 100, 0.1, 'D', true, false);   // Run of class D, solved by Monte Carlo without seasons
-    //D->montecarlo(0, 100, 300, 100, 0.1, 'D', false, true);   // Run of class D, solved by Monte Carlo without vitality
-    //D->montecarlo(0, 100, 300, 100, 0.1, 'D', true, true);    // Run of class D, solved by Monte Carlo with vitality and seasons
-
+    for(int i = 0; i < 6; i++) {
+        cout << "d" << endl;
+        D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, false, false);    // Run of class D, solved by Monte Carlo without vitality or seasons
+        //D->montecarlo(0, 100, 300, 100, 0.1, 'D', true, false);   // Run of class D, solved by Monte Carlo without seasons
+        //D->montecarlo(0, 100, 300, 100, 0.1, 'D', false, true);   // Run of class D, solved by Monte Carlo without vitality
+        //D->montecarlo(0, 100, 300, 100, 0.1, 'D', true, true);    // Run of class D, solved by Monte Carlo with vitality and seasons
+    }
     return 0;
 }
