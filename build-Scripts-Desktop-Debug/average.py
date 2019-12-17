@@ -10,7 +10,7 @@ R = [[], [], [], []]
 dok = ["| %7s | %9s | %9s | %9s |"%("t", "S", "I", "R")]
 k = 0
 
-
+isFirstFile = True
 
 while os.path.exists("5b" + str(k) + ".txt"):
     i = 0
@@ -25,39 +25,48 @@ while os.path.exists("5b" + str(k) + ".txt"):
             if temp[0] == "-"*41:
                 dok.append("-"*41)
                 i += 1
+                l = 0
             elif temp[0] in liste:
                 pass
             else:
-                dok.append("| %7s | %9s | %9s | %9s |" %(temp[0], temp[1], temp[2], temp[3]))
-                t[i].append(float(temp[0]))
-                S[i].append(float(temp[1]))
-                I[i].append(float(temp[2]))
-                R[i].append(float(temp[3]))
-
-        globals()['t%s' % k] = t
-        globals()['S%s' % k] = S
-        globals()['I%s' % k] = I
-        globals()['R%s' % k] = R
-
+                # doc.append("| %7s | %9s | %9s | %9s |" %(temp[0], temp[1], temp[2], temp[3]))
+                if isFirstFile:
+                    t[i].append(float(temp[0]))
+                    S[i].append(float(temp[1]))
+                    I[i].append(float(temp[2]))
+                    R[i].append(float(temp[3]))
+                else:
+                    t[i][l] += float(temp[0])
+                    S[i][l] += float(temp[1])
+                    I[i][l] += float(temp[2])
+                    R[i][l] += float(temp[3])
+                    l += 1
         k += 1
+        isFirstFile = False
 
-t_avg = np.zeros((4, len(t[0])))
-S_avg = np.zeros((4, len(t[0])))
-I_avg = np.zeros((4, len(t[0])))
-R_avg = np.zeros((4, len(t[0])))
-
-for h in range(k):
-    for j in range(len(t_avg)):
-        for i in range(len(t[0])):
-            t_avg[j][-1] += globals()['t%s' % h][j][i]
-            S_avg[j][-1] += globals()['S%s' % h][j][i]
-print(t_avg[3])
-for j in range(len(t_avg)):
-    for i in range(len(t[0])):
-        t_avg[j][i] = t_avg[j][i]/k
-        S_avg[j][i] = S_avg[j][i]/k
+for j in range(len(t)):
+    for i in range(len(t[j])):
+        t[j][i] /= k
+        S[j][i] /= k
+        I[j][i] /= k
+        R[j][i] /= k
 
 with open("5b.txt", "w") as outfile:
-    for j in range(len(t_avg)):
-        for i in range(len(t[0])):
-            outfile.write(str(t_avg[j][i]) + " " + str(S_avg[j][i]) + "\n")
+    for j in range(len(t)):
+        if j == 0:
+            outfile.write("A\n")
+            outfile.write("t S I R\n")
+        elif j == 1:
+            outfile.write("-"*41 + "\n")
+            outfile.write("B\n")
+            outfile.write("t S I R\n")
+        elif j == 2:
+            outfile.write("-"*41 + "\n")
+            outfile.write("C\n")
+            outfile.write("t S I R\n")
+        elif j == 3:
+            outfile.write("-"*41 + "\n")
+            outfile.write("D\n")
+            outfile.write("t S I R\n")
+        for ti, Si, Ii, Ri in zip(t[j], S[j], I[j], R[j]):
+            outfile.write(str(ti) + " " + str(Si) + " " + str(Ii) + " " + str(Ri) + "\n")

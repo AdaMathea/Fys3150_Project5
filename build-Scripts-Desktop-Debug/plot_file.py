@@ -30,7 +30,6 @@ with open(Filename, 'r') as infile:
             pass
         else:
             dok.append("| %7s | %9s | %9s | %9s |"%(temp[0], temp[1], temp[2], temp[3]))
-            print("t" + str(i))
             t[i].append(float(temp[0]))
             S[i].append(float(temp[1]))
             I[i].append(float(temp[2]))
@@ -38,11 +37,11 @@ with open(Filename, 'r') as infile:
 
 
 
-
+"""
 with open(Filename, "w") as outfile:
     for line in dok:
         outfile.write("%s\n"%line)
-
+"""
 values_plotted = 5000
 t_lim = 12
 t = np.array([np.array(i) for i in t])
@@ -97,6 +96,7 @@ elif Plot_choice == "n":
         plt.legend()
         plt.savefig(f"Figure{Fignum + i}.png")
     plt.show()
+    plt.clf()
 
 else:
     raise(Exception("Plot_choice must be y or n"))

@@ -145,7 +145,7 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
 
     if(test == false)
     {
-        string filename = "5a.txt";
+        string filename = "RK_vs.txt";
 
         if (letter == 'A')  // Opens file at the beginning if letter equals A
         {
@@ -261,7 +261,13 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
 
     if(test == false)
     {
-        string filename = "5b" + to_string(cycle) + ".txt"; // Opens different file then the Runge Kutta function
+        string filename;
+        if(cycle > 0) {
+            filename = "MC_vs" + to_string(cycle) + ".txt"; // Opens different file then the Runge Kutta function
+        }
+        else {
+            filename = "MC_vs.txt"; // Opens different file then the Runge Kutta function
+        }
 
         if (letter == 'A')
         {
