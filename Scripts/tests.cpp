@@ -1124,7 +1124,7 @@ void tests::Test_montecarlo(void)
     double h = 0.1;
     char letter = 'A';
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, false, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, false, false, false);
 
     double exp_1 [3] = {0, 0, 0};
     double res_1 [3] = {A->S, A->I, A->R};
@@ -1156,7 +1156,7 @@ void tests::Test_montecarlo(void)
 
     S_0 = 9;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, false, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, false, false, false);
 
     double exp_2 [3] = {10, 0, 0};
     double res_2 [3] = {A->S, A->I, A->R};
@@ -1187,7 +1187,7 @@ void tests::Test_montecarlo(void)
     A->dI = 2.3;
     A->e = M_PI;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, false, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, false, false, false);
 
     double exp_3 [3] = {10, 0, 0};
     double res_3 [3] = {A->S, A->I, A->R};
@@ -1222,7 +1222,7 @@ void tests::Test_montecarlo(void)
     S_0 = 0;
     h = 0.1;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, false, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, false, false, false);
 
     double exp_4 [3] = {0, 0, 0};
     double res_4 [3] = {A->S, A->I, A->R};
@@ -1258,7 +1258,7 @@ void tests::Test_montecarlo(void)
     t   = 1;
     h = 1;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, false, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, false, false, false);
 
     double exp_5 [3] = {21, 0, 0};
     double res_5 [3] = {A->S, A->I, A->R};
@@ -1290,7 +1290,7 @@ void tests::Test_montecarlo(void)
     A->dI = 0;
     A->e = 1;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, false, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, false, false, false);
 
     double exp_6 [3] = {10, 0, 0};
     double res_6 [3] = {A->S, A->I, A->R};
@@ -1327,7 +1327,7 @@ void tests::Test_montecarlo(void)
     S_0 = 0;
     h = 0.1;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, true, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, true, false, false);
 
     double exp_7 [3] = {0, 0, 0};
     double res_7 [3] = {A->S, A->I, A->R};
@@ -1360,7 +1360,7 @@ void tests::Test_montecarlo(void)
     S_0 = 9;
     h = 1;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, true, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, true, false, false);
 
     double exp_8 [3] = {10, 0, 0};
     double res_8 [3] = {A->S, A->I, A-> R};
@@ -1394,7 +1394,7 @@ void tests::Test_montecarlo(void)
 
     S_0 = 10;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, true, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, true, false, false);
 
     double exp_9 [3] = {10, 0, 0};
     double res_9 [3] = {A->S, A->I, A-> R};
@@ -1431,7 +1431,7 @@ void tests::Test_montecarlo(void)
     S_0 = 0;
     h = 0.1;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, true, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, true, false, false);
 
     double exp_10 [3] = {0, 0, 0};
     double res_10 [3] = {A->S, A->I, A->R};
@@ -1468,7 +1468,7 @@ void tests::Test_montecarlo(void)
     t   = 1;
     h = 1;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, true, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, true, false, false);
 
     double exp_11 [3] = {10, 0, 0};
     double res_11 [3] = {A->S, A->I, A-> R};
@@ -1499,7 +1499,7 @@ void tests::Test_montecarlo(void)
     A->dI = 2.3;
     A->e = 0;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, true, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, true, false, false);
 
     double exp_12 [3] = {10, 0, 0};
     double res_12 [3] = {A->S, A->I, A-> R};

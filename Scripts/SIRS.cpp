@@ -204,8 +204,7 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
     }
 } // end of rungekutta
 
-void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, char letter, int cycle = 100, bool vital = false, bool season = false, bool multicycle = false)
-void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, char letter, int cycle = 0, bool vital = false, bool season = false, bool vacc = false)
+void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, char letter, int cycle = 100, bool vital = false, bool season = false, bool vacc = false, bool multicycle = false)
 {
     /* Monte Carlo solver for the SIRS modell
      * It takes these parameters:
@@ -274,6 +273,7 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
     double p_id_;   // Probability of I population dying from the illness
     double p_rd;    // Probability of R population dying
     double p_bs;    // Probability of birth
+    double p_sr;    // Probability of vaccination
     double delta_t; // Timestep for this step of the simulation
 
     // Simulates until the time variable is bigger than or equal to the end time.
@@ -337,6 +337,16 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
                 S += 1;
             }
         }
+
+        if (vacc == true)
+            // Calculating probability if vaccines are enabled
+            p_sr    = delta_t * f;
+
+            if(dis(gen) < p_sr)
+            {
+                S -= 1;
+                R += 1;
+            }
 
         t_ += delta_t;  // Updating time
 
