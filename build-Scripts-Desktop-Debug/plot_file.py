@@ -60,7 +60,7 @@ if Plot_choice == "y":
     plt.xlabel("Time")
     plt.ylabel("Susceptible")
     plt.legend()
-    plt.savefig("Figure%02i.png"%Fignum)
+    plt.savefig(f"{Filename[:-4]}{Fignum}.png")
 
     plt.figure()
     for i in range(len(t)):
@@ -70,7 +70,7 @@ if Plot_choice == "y":
     plt.xlabel("Time")
     plt.ylabel("Infected")
     plt.legend()
-    plt.savefig("Figure%02i.png"%(Fignum + 1))
+    plt.savefig(f"{Filename[:-4]}{Fignum + 1}.png")
 
     plt.figure()
     for i in range(len(t)):
@@ -80,7 +80,7 @@ if Plot_choice == "y":
     plt.xlabel("Time")
     plt.ylabel("Recovered")
     plt.legend()
-    plt.savefig("Figure%02i.png"%(Fignum + 2))
+    plt.savefig(f"{Filename[:-4]}{Fignum + 2}.png")
 
     plt.show()
 
@@ -94,7 +94,7 @@ elif Plot_choice == "n":
         plt.xlabel("Time")
         plt.ylabel("Population")
         plt.legend()
-        plt.savefig(f"Figure{Fignum + i}.png")
+        plt.savefig(f"{Filename[:-4]}{Fignum + i}.png")
     plt.show()
     plt.clf()
 

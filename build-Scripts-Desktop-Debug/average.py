@@ -1,6 +1,8 @@
 import os
 import numpy as np
 
+Filename = input("Start av navn på datafil som skal åpnes: ")
+
 liste = ["A", "B", "C", "D", "t"]
 
 t = [[], [], [], []]
@@ -12,9 +14,9 @@ k = 0
 
 isFirstFile = True
 
-while os.path.exists("5b" + str(k) + ".txt"):
+while os.path.exists(str(Filename) + str(k) + ".txt"):
     i = 0
-    with open("5b" + str(k) + ".txt", 'r') as infile:
+    with open(str(Filename) + str(k) + ".txt", 'r') as infile:
         for line in infile.readlines():
             temp = line.split()
             j_= 0
@@ -41,6 +43,7 @@ while os.path.exists("5b" + str(k) + ".txt"):
                     I[i][l] += float(temp[2])
                     R[i][l] += float(temp[3])
                     l += 1
+        os.remove(str(Filename) + str(k) + ".txt")
         k += 1
         isFirstFile = False
 
@@ -51,7 +54,7 @@ for j in range(len(t)):
         I[j][i] /= k
         R[j][i] /= k
 
-with open("5b.txt", "w") as outfile:
+with open(str(Filename) + "_avg.txt", "w") as outfile:
     for j in range(len(t)):
         if j == 0:
             outfile.write("A\n")

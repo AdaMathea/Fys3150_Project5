@@ -204,6 +204,7 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
     }
 } // end of rungekutta
 
+void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, char letter, int cycle = 100, bool vital = false, bool season = false, bool multicycle = false)
 void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, char letter, int cycle = 0, bool vital = false, bool season = false, bool vacc = false)
 {
     /* Monte Carlo solver for the SIRS modell
@@ -244,11 +245,11 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
     if(test == false)
     {
         string filename;
-        if(cycle > 0) {
-            filename = "MC_vs" + to_string(cycle) + ".txt"; // Opens different file then the Runge Kutta function
+        if(!multicycle) {
+            filename = "MC_vs.txt"; // Opens different file then the Runge Kutta function
         }
         else {
-            filename = "MC_vs.txt"; // Opens different file then the Runge Kutta function
+            filename = "MC_vs" + to_string(cycle) + ".txt"; // Opens different file then the Runge Kutta function
         }
 
         if (letter == 'A')

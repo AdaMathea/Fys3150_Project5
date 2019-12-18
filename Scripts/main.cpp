@@ -60,6 +60,10 @@ int main()
         //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, true, false, true);    // Run of class A, solved by Monte Carlo with vitality and vaccination
         //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, false, true, true);    // Run of class A, solved by Monte Carlo with seasons and vaccination
         //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, true, true, true);    // Run of class A, solved by Monte Carlo with vitality, seasons and vaccination
+        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, false, false, lim > 0);    // Run of class A, solved by Monte Carlo without vitality or seasons
+        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, true, false, lim > 0);   // Run of class A, solved by Monte Carlo without seasons
+        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, false, true, lim > 0);   // Run of class A, solved by Monte Carlo without vitality
+        A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, true, true, lim > 0);    // Run of class A, solved by Monte Carlo with vitality and seasons
     }
 
     SIRS * B = new SIRS;
@@ -90,6 +94,10 @@ int main()
         //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, true, false, true);    // Run of class B, solved by Monte Carlo with vitality and vaccination
         //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, false, true, true);    // Run of class B, solved by Monte Carlo with seasons and vaccination
         //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, true, true, true);    // Run of class B, solved by Monte Carlo with vitality, seasons and vaccination
+        //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, false, false, lim > 0);    // Run of class B, solved by Monte Carlo without vitality or seasons
+        //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, true, false, lim > 0);   // Run of class B, solved by Monte Carlo without seasons
+        //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, false, true, lim > 0);   // Run of class B, solved by Monte Carlo without vitality
+        B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, true, true, lim > 0);    // Run of class B, solved by Monte Carlo with vitality and seasons
     }
 
     SIRS * C = new SIRS;
@@ -120,6 +128,10 @@ int main()
         //C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, true, false, true);    // Run of class C, solved by Monte Carlo with vitality and vaccination
         //C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, false, true, true);    // Run of class C, solved by Monte Carlo with seasons and vaccination
         //C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, true, true, true);    // Run of class C, solved by Monte Carlo with vitality, seasons and vaccination
+        //C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, false, false, lim > 0);    // Run of class C, solved by Monte Carlo without vitality or seasons
+        //C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, true, false, lim > 0);   // Run of class C, solved by Monte Carlo without seasons
+        //C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, false, true, lim > 0);   // Run of class C, solved by Monte Carlo without vitality
+        C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, true, true, lim > 0);    // Run of class C, solved by Monte Carlo with vitality and seasons
     }
 
     SIRS * D = new SIRS;
@@ -150,6 +162,10 @@ int main()
         //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, true, false, true);    // Run of class D, solved by Monte Carlo with vitality and vaccination
         //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, false, true, true);    // Run of class D, solved by Monte Carlo with seasons and vaccination
         //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, true, true, true);    // Run of class D, solved by Monte Carlo with vitality, seasons and vaccination
+        //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, false, false, lim > 0);    // Run of class D, solved by Monte Carlo without vitality or seasons
+        //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, true, false, lim > 0);   // Run of class D, solved by Monte Carlo without seasons
+        //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, false, true, lim > 0);   // Run of class D, solved by Monte Carlo without vitality
+        D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, true, true, lim > 0);    // Run of class D, solved by Monte Carlo with vitality and seasons
     }
     return 0;
 }
