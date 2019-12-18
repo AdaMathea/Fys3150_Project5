@@ -8,33 +8,28 @@
 #include <SIRS.h>
 using namespace std;
 
-double SIRS::dSdt(double t, double y, bool vital = false)
+double SIRS::dSdt(double t, double y, bool vital = false, bool vacc = false)
 {
     // A function calculating the growth of S
 
+    double value = c * R - (a * S * I) / N; // The growth
+
     if (vital == true)
     {
-        double value = c * R - (a * S * I) / N - d * S + e * N; // The growth if vital dynamics is enabled
-        if(abs(value) < 1e-12)  // if the growth is really small, it is set to 0
-        {
-            return 0;
-        }
-        else
-        {
-            return value;
-        }
+        value +=  - d * S + e * N; // The growth if vital dynamics is enabled
+    }
+    if (vacc == true)
+    {
+        value += - f;   // The growth if vacsines are enabled
+    }
+
+    if(abs(value) < 1e-12)  // if the growth is really small, it is set to 0
+    {
+        return 0;
     }
     else
     {
-        double value = c * R - (a * S * I) / N; // The growth without vital dynamics
-        if(abs(value) < 1e-12)
-        {
-            return 0;
-        }
-        else
-        {
-            return value;
-        }
+        return value;
     }
 } // end of dSdt
 
@@ -42,59 +37,46 @@ double SIRS::dIdt(double t, double y, bool vital = false)
 {
     // A function calculating the growth of I
 
+    double value = (a * S * I / N) - b * y; // The growth
+
     if (vital == true)
     {
-        double value = (a * S * I / N) - b * I - d * I - dI * I;    // The growth if vital dynamics is enabled
-        if(abs(value) < 1e-12)
-        {
-            return 0;
-        }
-        else
-        {
-            return value;
-        }
+        value += - d * I - dI * I;    // The growth if vital dynamics is enabled
+    }
+
+    if(abs(value) < 1e-12)
+    {
+        return 0;
     }
     else
     {
-        double value = (a * S * I / N) - b * I; // The growth without vital dynamics
-        if(abs(value) < 1e-12)
-        {
-            return 0;
-        }
-        else
-        {
-            return value;
-        }
+        return value;
     }
 } // end of dIdt
 
-double SIRS::dRdt(double t, double y, bool vital = false)
+double SIRS::dRdt(double t, double y, bool vital = false, bool vacc = false)
 {
     // A function calculating the growth of I
 
+    double value = b * I - c * R;   // The growth
+
     if (vital == true)
     {
-        double value = b * I - c * R - d * R;   // The growth if vital dynamics is enabled
-        if(abs(value) < 1e-12)
-        {
-            return 0;
-        }
-        else
-        {
-            return value;
-        }
+        value += - d * R;   // The growth if vital dynamics is enabled
+    }
+
+    if (vacc == true)
+    {
+        value += f;
+    }
+
+    if(abs(value) < 1e-12)
+    {
+        return 0;
     }
     else
     {
-        double value = b * I - c * R;   // The growth without vital dynamics
-        if(abs(value) < 1e-12)
-        {
-            return 0;
-        }
-        else
-        {
-            return value;
-        }
+        return value;
     }
 } // end of dRdt
 
@@ -105,7 +87,7 @@ double SIRS::a_t(double omega, double a_0, double A, double t_n)
     return A * cos(omega * t_n) + a_0;
 } // end of a_t
 
-void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, char letter, bool vital = false, bool season = false)
+void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, char letter, bool vital = false, bool season = false, bool vacc = false)
 {
     /* Runge Kutta 4 solver for the SIRS modell
      * It takes these parameters:
@@ -169,21 +151,21 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
 
         // Apply Runge Kutta Formulas to find next value of y
 
-        k1_S = h * this->dSdt(t_0, S, vital);
+        k1_S = h * this->dSdt(t_0, S, vital, vacc);
         k1_I = h * this->dIdt(t_0, I, vital);
-        k1_R = h * this->dRdt(t_0, R, vital);
+        k1_R = h * this->dRdt(t_0, R, vital, vacc);
 
-        k2_S = h * this->dSdt(t_0 + 0.5*h, S + 0.5*k1_S, vital);
-        k2_I = h * this->dIdt(t_0 + 0.5*h, I + 0.5*k1_I, vital);
-        k2_R = h * this->dRdt(t_0 + 0.5*h, R + 0.5*k1_R, vital);
+        k2_S = h * this->dSdt(t_0 + 0.5 * h, S + 0.5 * k1_S, vital, vacc);
+        k2_I = h * this->dIdt(t_0 + 0.5 * h, I + 0.5 * k1_I, vital);
+        k2_R = h * this->dRdt(t_0 + 0.5 * h, R + 0.5 * k1_R, vital, vacc);
 
-        k3_S = h * this->dSdt(t_0 + 0.5*h, S + 0.5*k2_S, vital);
-        k3_I = h * this->dIdt(t_0 + 0.5*h, I + 0.5*k2_I, vital);
-        k3_R = h * this->dRdt(t_0 + 0.5*h, R + 0.5*k2_R, vital);
+        k3_S = h * this->dSdt(t_0 + 0.5 * h, S + 0.5 * k2_S, vital, vacc);
+        k3_I = h * this->dIdt(t_0 + 0.5 * h, I + 0.5 * k2_I, vital);
+        k3_R = h * this->dRdt(t_0 + 0.5 * h, R + 0.5 * k2_R, vital, vacc);
 
-        k4_S = h * this->dSdt(t_0 + h, S + k3_S, vital);
+        k4_S = h * this->dSdt(t_0 + h, S + k3_S, vital, vacc);
         k4_I = h * this->dIdt(t_0 + h, I + k3_I, vital);
-        k4_R = h * this->dRdt(t_0 + h, R + k3_R, vital);
+        k4_R = h * this->dRdt(t_0 + h, R + k3_R, vital, vacc);
 
         // Update next value of y
         S += (1.0/6.0) * (k1_S + 2 * k2_S + 2 * k3_S + k4_S);
@@ -222,7 +204,7 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
     }
 } // end of rungekutta
 
-void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, char letter, int cycle = 0, bool vital = false, bool season = false)
+void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, char letter, int cycle = 0, bool vital = false, bool season = false, bool vacc = false)
 {
     /* Monte Carlo solver for the SIRS modell
      * It takes these parameters:

@@ -49,8 +49,8 @@ void tests::Test_dSdt(void)
     double exp_2 = 0.012;
 
     // Calculate the results for test 1 and 2
-    double res_1 = A->dSdt(t, y, false);
-    double res_2 = A->dSdt(t, y, true);
+    double res_1 = A->dSdt(t, y, false, false);
+    double res_2 = A->dSdt(t, y, true, true);
 
     // Print info if test is not passed
     if(abs(res_1 - exp_1) > tol)
@@ -103,8 +103,8 @@ void tests::Test_dSdt(void)
     double exp_4 = 0.518;
 
     // Results for 3 and 4
-    double res_3 = A->dSdt(t, y, false);
-    double res_4 = A->dSdt(t, y, true);
+    double res_3 = A->dSdt(t, A->S, false, false);
+    double res_4 = A->dSdt(t, A->S, true, false);
 
     // Test 3
     if(abs(res_3 - exp_3) > tol)
@@ -157,8 +157,8 @@ void tests::Test_dSdt(void)
     double exp_6 = 0.23266666666666666666666666666666666666666666666666666666666666666666666;
 
     // Results for 5 and 6
-    double res_5 = A->dSdt(t, y, false);
-    double res_6 = A->dSdt(t, y, true);
+    double res_5 = A->dSdt(t, A->S, false, false);
+    double res_6 = A->dSdt(t, A->S, true, false);
 
     // Test 5
     if(abs(res_5 - exp_5) > tol)
@@ -240,8 +240,8 @@ void tests::Test_dIdt(void)
     double exp_2 = - 1.008;
 
     // results
-    double res_1 = A->dIdt(t, y, false);
-    double res_2 = A->dIdt(t, y, true);
+    double res_1 = A->dIdt(t, A->I, false);
+    double res_2 = A->dIdt(t, A->I, true);
 
     // Test 1
     if(abs(res_1 - exp_1) > tol)
@@ -294,8 +294,8 @@ void tests::Test_dIdt(void)
     double exp_4 = 0;
 
     // Results
-    double res_3 = A->dIdt(t, y, false);
-    double res_4 = A->dIdt(t, y, true);
+    double res_3 = A->dIdt(t, A->I, false);
+    double res_4 = A->dIdt(t, A->I, true);
 
     // Test 3
     if(abs(res_3 - exp_3) > tol)
@@ -349,8 +349,8 @@ void tests::Test_dIdt(void)
     double exp_6 = -0.6826666666666666666666666666666666666666666666666;
 
     // Results
-    double res_5 = A->dIdt(t, y, false);
-    double res_6 = A->dIdt(t, y, true);
+    double res_5 = A->dIdt(t, A->I, false);
+    double res_6 = A->dIdt(t, A->I, true);
 
     // Test 5
     if(abs(res_5 - exp_5) > tol)
@@ -426,8 +426,8 @@ void tests::Test_dRdt(void)
     double t = 0;
     double y = 0;
 
-    double res_1 = A->dRdt(t, y, false);
-    double res_2 = A->dRdt(t, y, true);
+    double res_1 = A->dRdt(t, A->R, false, false);
+    double res_2 = A->dRdt(t, A->R, true, true);
 
     if(abs(res_1 - exp_1) > tol)
     {
@@ -474,8 +474,8 @@ void tests::Test_dRdt(void)
     double exp_3 = - 0.5;
     double exp_4 = - 0.506;
 
-    double res_3 = A->dRdt(t, y, false);
-    double res_4 = A->dRdt(t, y, true);
+    double res_3 = A->dRdt(t, A->R, false, false);
+    double res_4 = A->dRdt(t, A->R, true, false);
 
     if(abs(res_3 - exp_3) > tol)
     {
@@ -522,8 +522,8 @@ void tests::Test_dRdt(void)
     double exp_5 = 0.5;
     double exp_6 = 0.482;
 
-    double res_5 = A->dRdt(t, y, false);
-    double res_6 = A->dRdt(t, y, true);
+    double res_5 = A->dRdt(t, A->R, false, false);
+    double res_6 = A->dRdt(t, A->R, true, false);
 
     if(abs(res_5 - exp_5) > tol)
     {
@@ -705,7 +705,7 @@ void tests::Test_rungekutta(void)
     double h = 0.1;
     char letter = 'A';
 
-    A->rungekutta(t_0, t, S_0, I_0, h, letter, false, false);
+    A->rungekutta(t_0, t, S_0, I_0, h, letter, false, false, false);
 
     double exp_1 [3] = {0, 0, 0};
     double res_1 [3] = {A->S, A->I, A->R};
@@ -738,7 +738,7 @@ void tests::Test_rungekutta(void)
     S_0 = 9;
     h = 1;
 
-    A->rungekutta(t_0, t, S_0, I_0, h, letter, false, false);
+    A->rungekutta(t_0, t, S_0, I_0, h, letter, false, false, false);
 
     double exp_2 [3] = {10, 0, 0};
     double res_2 [3] = {A->S, A->I, A->R};
@@ -769,7 +769,7 @@ void tests::Test_rungekutta(void)
     A->dI = 2.3;
     A->e = M_PI;
 
-    A->rungekutta(t_0, t, S_0, I_0, h, letter, false, false);
+    A->rungekutta(t_0, t, S_0, I_0, h, letter, false, false, false);
 
     double exp_3 [3] = {10, 0, 0};
     double res_3 [3] = {A->S, A->I, A->R};
@@ -804,7 +804,7 @@ void tests::Test_rungekutta(void)
     S_0 = 0;
     h = 0.1;
 
-    A->rungekutta(t_0, t, S_0, I_0, h, letter, true, false);
+    A->rungekutta(t_0, t, S_0, I_0, h, letter, true, false, false);
 
     double exp_4 [3] = {0, 0, 0};
     double res_4 [3] = {A->S, A->I, A->R};
@@ -836,7 +836,7 @@ void tests::Test_rungekutta(void)
     S_0 = 9;
     h = 1;
 
-    A->rungekutta(t_0, t, S_0, I_0, h, letter, true, false);
+    A->rungekutta(t_0, t, S_0, I_0, h, letter, true, false, false);
 
     double exp_5 [3] = {10.066, 0, 0};
     double res_5 [3] = {A->S, A->I, A->R};
@@ -867,7 +867,7 @@ void tests::Test_rungekutta(void)
     A->dI = 2.3;
     A->e = M_PI;
 
-    A->rungekutta(t_0, t, S_0, I_0, h, letter, true, false);
+    A->rungekutta(t_0, t, S_0, I_0, h, letter, true, false, false);
 
     double exp_6 [3] = {0, 0, 0};
     double res_6 [3] = {A->S, A->I, A->R};
@@ -903,7 +903,7 @@ void tests::Test_rungekutta(void)
     S_0 = 0;
     h = 0.1;
 
-    A->rungekutta(t_0, t, S_0, I_0, h, letter, false, true);
+    A->rungekutta(t_0, t, S_0, I_0, h, letter, false, true, false);
 
     double exp_7 [3] = {0, 0, 0};
     double res_7 [3] = {A->S, A->I, A->R};
@@ -935,7 +935,7 @@ void tests::Test_rungekutta(void)
     S_0 = 9;
     h = 1;
 
-    A->rungekutta(t_0, t, S_0, I_0, h, letter, false, true);
+    A->rungekutta(t_0, t, S_0, I_0, h, letter, false, true, false);
 
     double exp_8 [3] = {10, 0, 0};
     double res_8 [3] = {A->S, A->I, A-> R};
@@ -966,7 +966,7 @@ void tests::Test_rungekutta(void)
     A->dI = 2.3;
     A->e = M_PI;
 
-    A->rungekutta(t_0, t, S_0, I_0, h, letter, false, true);
+    A->rungekutta(t_0, t, S_0, I_0, h, letter, false, true, false);
 
     double exp_9 [3] = {10, 0, 0};
     double res_9 [3] = {A->S, A->I, A-> R};
@@ -1002,7 +1002,7 @@ void tests::Test_rungekutta(void)
     S_0 = 0;
     h = 0.1;
 
-    A->rungekutta(t_0, t, S_0, I_0, h, letter, true, true);
+    A->rungekutta(t_0, t, S_0, I_0, h, letter, true, true, false);
 
     double exp_10 [3] = {0, 0, 0};
     double res_10 [3] = {A->S, A->I, A->R};
@@ -1034,7 +1034,7 @@ void tests::Test_rungekutta(void)
     S_0 = 9;
     h = 1;
 
-    A->rungekutta(t_0, t, S_0, I_0, h, letter, true, true);
+    A->rungekutta(t_0, t, S_0, I_0, h, letter, true, true, false);
 
     double exp_11 [3] = {10.066, 0, 0};
     double res_11 [3] = {A->S, A->I, A-> R};
@@ -1065,7 +1065,7 @@ void tests::Test_rungekutta(void)
     A->dI = 2.3;
     A->e = M_PI;
 
-    A->rungekutta(t_0, t, S_0, I_0, h, letter, true, true);
+    A->rungekutta(t_0, t, S_0, I_0, h, letter, true, true, false);
 
     double exp_12 [3] = {0, 0, 0};
     double res_12 [3] = {A->S, A->I, A-> R};
@@ -1124,7 +1124,7 @@ void tests::Test_montecarlo(void)
     double h = 0.1;
     char letter = 'A';
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, false, false);
 
     double exp_1 [3] = {0, 0, 0};
     double res_1 [3] = {A->S, A->I, A->R};
@@ -1156,7 +1156,7 @@ void tests::Test_montecarlo(void)
 
     S_0 = 9;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, false, false);
 
     double exp_2 [3] = {10, 0, 0};
     double res_2 [3] = {A->S, A->I, A->R};
@@ -1187,7 +1187,7 @@ void tests::Test_montecarlo(void)
     A->dI = 2.3;
     A->e = M_PI;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, false, false);
 
     double exp_3 [3] = {10, 0, 0};
     double res_3 [3] = {A->S, A->I, A->R};
@@ -1222,7 +1222,7 @@ void tests::Test_montecarlo(void)
     S_0 = 0;
     h = 0.1;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, false, false);
 
     double exp_4 [3] = {0, 0, 0};
     double res_4 [3] = {A->S, A->I, A->R};
@@ -1258,7 +1258,7 @@ void tests::Test_montecarlo(void)
     t   = 1;
     h = 1;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, false, false);
 
     double exp_5 [3] = {21, 0, 0};
     double res_5 [3] = {A->S, A->I, A->R};
@@ -1290,7 +1290,7 @@ void tests::Test_montecarlo(void)
     A->dI = 0;
     A->e = 1;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, false);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, false, false);
 
     double exp_6 [3] = {10, 0, 0};
     double res_6 [3] = {A->S, A->I, A->R};
@@ -1327,7 +1327,7 @@ void tests::Test_montecarlo(void)
     S_0 = 0;
     h = 0.1;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, true);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, true, false);
 
     double exp_7 [3] = {0, 0, 0};
     double res_7 [3] = {A->S, A->I, A->R};
@@ -1356,11 +1356,11 @@ void tests::Test_montecarlo(void)
 
     A->N = 10;
     A->a = 4;
-    A->c = 1;
+    A->c = 1 / 0.07;
     S_0 = 9;
     h = 1;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, true);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, true, false);
 
     double exp_8 [3] = {10, 0, 0};
     double res_8 [3] = {A->S, A->I, A-> R};
@@ -1394,7 +1394,7 @@ void tests::Test_montecarlo(void)
 
     S_0 = 10;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, true);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, false, true, false);
 
     double exp_9 [3] = {10, 0, 0};
     double res_9 [3] = {A->S, A->I, A-> R};
@@ -1431,7 +1431,7 @@ void tests::Test_montecarlo(void)
     S_0 = 0;
     h = 0.1;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, true);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, true, false);
 
     double exp_10 [3] = {0, 0, 0};
     double res_10 [3] = {A->S, A->I, A->R};
@@ -1468,7 +1468,7 @@ void tests::Test_montecarlo(void)
     t   = 1;
     h = 1;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, true);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, true, false);
 
     double exp_11 [3] = {10, 0, 0};
     double res_11 [3] = {A->S, A->I, A-> R};
@@ -1499,7 +1499,7 @@ void tests::Test_montecarlo(void)
     A->dI = 2.3;
     A->e = 0;
 
-    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, true);
+    A->montecarlo(t_0, t, S_0, I_0, h, letter, 0, true, true, false);
 
     double exp_12 [3] = {10, 0, 0};
     double res_12 [3] = {A->S, A->I, A-> R};

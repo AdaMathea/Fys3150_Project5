@@ -42,16 +42,24 @@ int main()
     A->dI = 0.002;  // death rate due to illness
     A->e = 0.012;   // birth rate
 
-    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, false);    // Run of class A, solved by Runge Kutta 4 without vitality or seasons
-    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, false);   // Run of class A, solved by Runge Kutta 4 without seasons
-    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, true);   // Run of class A, solved by Runge Kutta 4 without vitality
-    A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, true);    // Run of class A, solved by Runge Kutta 4 with vitality and seasons
+    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, false, false);    // Run of class A, solved by Runge Kutta 4
+    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, false, false);   // Run of class A, solved by Runge Kutta 4 with vitality
+    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, true, false);   // Run of class A, solved by Runge Kutta 4 with seasons
+    A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, false, true);    // Run of class A, solved by Runge Kutta 4 with vaccination
+    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, true, false);    // Run of class A, solved by Runge Kutta 4 with vitality and seasons
+    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, false, true);    // Run of class A, solved by Runge Kutta 4 with vitality and vaccination
+    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, true, true);    // Run of class A, solved by Runge Kutta 4 with seasons and vaccination
+    //A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, true, true);    // Run of class A, solved by Runge Kutta 4 with vitality, seasons and vaccination
     for(int i = 0; i < lim; i++) {
         cout << "a" << endl;
-        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, false, false);    // Run of class A, solved by Monte Carlo without vitality or seasons
-        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, true, false);   // Run of class A, solved by Monte Carlo without seasons
-        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, false, true);   // Run of class A, solved by Monte Carlo without vitality
-        A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, true, true);    // Run of class A, solved by Monte Carlo with vitality and seasons
+        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, false, false, false);    // Run of class A, solved by Monte Carlo
+        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, true, false, false);   // Run of class A, solved by Monte Carlo with vitality
+        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, false, true, false);   // Run of class A, solved by Monte Carlo with seasons
+        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, false, false, true);    // Run of class A, solved by Monte Carlo with vaccination
+        A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, true, true, false);    // Run of class A, solved by Monte Carlo with vitality and seasons
+        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, true, false, true);    // Run of class A, solved by Monte Carlo with vitality and vaccination
+        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, false, true, true);    // Run of class A, solved by Monte Carlo with seasons and vaccination
+        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, true, true, true);    // Run of class A, solved by Monte Carlo with vitality, seasons and vaccination
     }
 
     SIRS * B = new SIRS;
@@ -64,16 +72,24 @@ int main()
     B->dI = 0.002;
     B->e = 0.012;
 
-    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', false, false);    // Run of class B, solved by Runge Kutta 4 without vitality or seasons
-    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, false);   // Run of class B, solved by Runge Kutta 4 without seasons
-    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', false, true);   // Run of class B, solved by Runge Kutta 4 without vitality
-    B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, true);    // Run of class B, solved by Runge Kutta 4 with vitality and seasons
+    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', false, false, false);    // Run of class B, solved by Runge Kutta 4
+    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, false, false);   // Run of class B, solved by Runge Kutta 4 with vitality
+    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', false, true, false);   // Run of class B, solved by Runge Kutta 4 with seasons
+    B->rungekutta(0, 100, 300, 100, 0.1, 'B', false, false, true);    // Run of class B, solved by Runge Kutta 4 with vaccination
+    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, true, false);    // Run of class B, solved by Runge Kutta 4 with vitality and seasons
+    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, false, true);    // Run of class B, solved by Runge Kutta 4 with vitality and vaccination
+    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', false, true, true);    // Run of class B, solved by Runge Kutta 4 with seasons and vaccination
+    //B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, true, true);    // Run of class B, solved by Runge Kutta 4 with vitality, seasons and vaccination
     for(int i = 0; i < lim; i++) {
-        cout << "b" << endl;
-        //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, false, false);    // Run of class B, solved by Monte Carlo without vitality or seasons
-        //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, true, false);   // Run of class B, solved by Monte Carlo without seasons
-        //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, false, true);   // Run of class B, solved by Monte Carlo without vitality
-        B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, true, true);    // Run of class B, solved by Monte Carlo with vitality and seasons
+        cout << "a" << endl;
+        //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, false, false, false);    // Run of class B, solved by Monte Carlo
+        //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, true, false, false);   // Run of class B, solved by Monte Carlo with vitality
+        //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, false, true, false);   // Run of class B, solved by Monte Carlo with seasons
+        B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, false, false, true);    // Run of class B, solved by Monte Carlo with vaccination
+        //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, true, true, false);    // Run of class B, solved by Monte Carlo with vitality and seasons
+        //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, true, false, true);    // Run of class B, solved by Monte Carlo with vitality and vaccination
+        //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, false, true, true);    // Run of class B, solved by Monte Carlo with seasons and vaccination
+        //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, true, true, true);    // Run of class B, solved by Monte Carlo with vitality, seasons and vaccination
     }
 
     SIRS * C = new SIRS;
@@ -86,16 +102,24 @@ int main()
     C->dI = 0.002;
     C->e = 0.012;
 
-    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', false, false);    // Run of class C, solved by Runge Kutta 4 without vitality or seasons
-    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, false);   // Run of class C, solved by Runge Kutta 4 without seasons
-    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', false, true);   // Run of class C, solved by Runge Kutta 4 without vitality
-    C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, true);    // Run of class C, solved by Runge Kutta 4 with vitality and seasons
+    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', false, false, false);    // Run of class B, solved by Runge Kutta 4
+    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, false, false);   // Run of class B, solved by Runge Kutta 4 with vitality
+    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', false, true, false);   // Run of class B, solved by Runge Kutta 4 with seasons
+    C->rungekutta(0, 100, 300, 100, 0.1, 'C', false, false, true);    // Run of class B, solved by Runge Kutta 4 with vaccination
+    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, true, false);    // Run of class B, solved by Runge Kutta 4 with vitality and seasons
+    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, false, true);    // Run of class B, solved by Runge Kutta 4 with vitality and vaccination
+    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', false, true, true);    // Run of class B, solved by Runge Kutta 4 with seasons and vaccination
+    //C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, true, true);    // Run of class B, solved by Runge Kutta 4 with vitality, seasons and vaccination
     for(int i = 0; i < lim; i++) {
-        cout << "c" << endl;
-        //C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, false, false);    // Run of class C, solved by Monte Carlo without vitality or seasons
-        //C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, true, false);   // Run of class C, solved by Monte Carlo without seasons
-        //C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, false, true);   // Run of class C, solved by Monte Carlo without vitality
-        C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, true, true);    // Run of class C, solved by Monte Carlo with vitality and seasons
+        cout << "a" << endl;
+        //C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, false, false, false);    // Run of class C, solved by Monte Carlo
+        //C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, true, false, false);   // Run of class C, solved by Monte Carlo with vitality
+        //C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, false, true, false);   // Run of class C, solved by Monte Carlo with seasons
+        C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, false, false, true);    // Run of class C, solved by Monte Carlo with vaccination
+        //C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, true, true, false);    // Run of class C, solved by Monte Carlo with vitality and seasons
+        //C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, true, false, true);    // Run of class C, solved by Monte Carlo with vitality and vaccination
+        //C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, false, true, true);    // Run of class C, solved by Monte Carlo with seasons and vaccination
+        //C->montecarlo(0, 100, 300, 100, 0.1, 'C', i, true, true, true);    // Run of class C, solved by Monte Carlo with vitality, seasons and vaccination
     }
 
     SIRS * D = new SIRS;
@@ -108,16 +132,24 @@ int main()
     D->dI = 0.002;
     D->e = 0.012;
 
-    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', false, false);    // Run of class D, solved by Runge Kutta 4 without vitality or seasons
-    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, false);   // Run of class D, solved by Runge Kutta 4 without seasons
-    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', false, true);   // Run of class D, solved by Runge Kutta 4 without vitality
-    D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, true);    // Run of class D, solved by Runge Kutta 4 with vitality and seasons
+    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', false, false, false);    // Run of class D, solved by Runge Kutta 4
+    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, false, false);   // Run of class D, solved by Runge Kutta 4 with vitality
+    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', false, true, false);   // Run of class D, solved by Runge Kutta 4 with seasons
+    D->rungekutta(0, 100, 300, 100, 0.1, 'D', false, false, true);    // Run of class D, solved by Runge Kutta 4 with vaccination
+    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, true, false);    // Run of class D, solved by Runge Kutta 4 with vitality and seasons
+    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, false, true);    // Run of class D, solved by Runge Kutta 4 with vitality and vaccination
+    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', false, true, true);    // Run of class D, solved by Runge Kutta 4 with seasons and vaccination
+    //D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, true, true);    // Run of class D, solved by Runge Kutta 4 with vitality, seasons and vaccination
     for(int i = 0; i < lim; i++) {
-        cout << "d" << endl;
-        //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, false, false);    // Run of class D, solved by Monte Carlo without vitality or seasons
-        //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, true, false);   // Run of class D, solved by Monte Carlo without seasons
-        //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, false, true);   // Run of class D, solved by Monte Carlo without vitality
-        D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, true, true);    // Run of class D, solved by Monte Carlo with vitality and seasons
+        cout << "a" << endl;
+        //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, false, false, false);    // Run of class D, solved by Monte Carlo
+        //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, true, false, false);   // Run of class D, solved by Monte Carlo with vitality
+        //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, false, true, false);   // Run of class D, solved by Monte Carlo with seasons
+        D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, false, false, true);    // Run of class D, solved by Monte Carlo with vaccination
+        //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, true, true, false);    // Run of class D, solved by Monte Carlo with vitality and seasons
+        //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, true, false, true);    // Run of class D, solved by Monte Carlo with vitality and vaccination
+        //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, false, true, true);    // Run of class D, solved by Monte Carlo with seasons and vaccination
+        //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, true, true, true);    // Run of class D, solved by Monte Carlo with vitality, seasons and vaccination
     }
     return 0;
 }
