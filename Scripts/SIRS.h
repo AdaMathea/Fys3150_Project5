@@ -23,6 +23,7 @@ class SIRS {
         bool test = false;
 
         //Functions
+        double f_t(double);
         double dSdt(double, double, bool, bool);
         double dIdt(double, double, bool);
         double dRdt(double, double, bool, bool);

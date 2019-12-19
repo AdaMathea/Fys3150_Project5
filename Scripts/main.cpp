@@ -42,6 +42,7 @@ int main()
     A->d = 0.006;   // death rate
     A->dI = 0.002;  // death rate due to illness
     A->e = 0.012;   // birth rate
+    A->f = 0.1      // vaccination rate
 
     //A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, false, false);    // Run of class A, solved by Runge Kutta 4
     //A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, false, false);   // Run of class A, solved by Runge Kutta 4 with vitality
@@ -72,6 +73,7 @@ int main()
     B->d = 0.006;
     B->dI = 0.002;
     B->e = 0.012;
+    B->f = 0.1;
 
     //B->rungekutta(0, 100, 300, 100, 0.1, 'B', false, false, false);    // Run of class B, solved by Runge Kutta 4
     //B->rungekutta(0, 100, 300, 100, 0.1, 'B', true, false, false);   // Run of class B, solved by Runge Kutta 4 with vitality
@@ -102,6 +104,7 @@ int main()
     C->d = 0.006;
     C->dI = 0.002;
     C->e = 0.012;
+    C->f = 0.1;
 
     //C->rungekutta(0, 100, 300, 100, 0.1, 'C', false, false, false);    // Run of class B, solved by Runge Kutta 4
     //C->rungekutta(0, 100, 300, 100, 0.1, 'C', true, false, false);   // Run of class B, solved by Runge Kutta 4 with vitality
@@ -132,6 +135,7 @@ int main()
     D->d = 0.006;
     D->dI = 0.002;
     D->e = 0.012;
+    D->f = 0.1;
 
     //D->rungekutta(0, 100, 300, 100, 0.1, 'D', false, false, false);    // Run of class D, solved by Runge Kutta 4
     //D->rungekutta(0, 100, 300, 100, 0.1, 'D', true, false, false);   // Run of class D, solved by Runge Kutta 4 with vitality

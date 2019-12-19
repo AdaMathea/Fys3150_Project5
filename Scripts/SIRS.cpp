@@ -87,6 +87,12 @@ double SIRS::a_t(double omega, double a_0, double A, double t_n)
     return A * cos(omega * t_n) + a_0;
 } // end of a_t
 
+double SIRS::f_t(double t)
+{
+    // Rate of vaccination
+    return 0;
+}
+
 void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, char letter, bool vital = false, bool season = false, bool vacc = false)
 {
     /* Runge Kutta 4 solver for the SIRS modell
@@ -147,6 +153,11 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
         if(season == true)
         {
             a = a_t(2*M_PI/365.25, 4, 1, t_);  // Calculate the variating a if seasons are enabled
+        }
+
+        if (vacc == true)
+        {
+            f = f + h;
         }
 
         // Apply Runge Kutta Formulas to find next value of y
