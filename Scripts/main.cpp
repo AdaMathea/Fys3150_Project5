@@ -31,6 +31,7 @@ int main()
 
     // Sets up class A, B, C and D and runs them
     int lim = 10;
+    int time = 730;
 
     SIRS * A = new SIRS;
 
@@ -91,7 +92,7 @@ int main()
         //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, false, true, true, lim > 0);    // Run of class B, solved by Monte Carlo with seasons and vaccination
         //B->montecarlo(0, 100, 300, 100, 0.1, 'B', i, true, true, true, lim > 0);    // Run of class B, solved by Monte Carlo with vitality, seasons and vaccination
     }
-
+/*
     SIRS * C = new SIRS;
 
     C->N = 400;
@@ -151,5 +152,6 @@ int main()
         //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, false, true, true, lim > 0);    // Run of class D, solved by Monte Carlo with seasons and vaccination
         //D->montecarlo(0, 100, 300, 100, 0.1, 'D', i, true, true, true, lim > 0);    // Run of class D, solved by Monte Carlo with vitality, seasons and vaccination
     }
+*/
     return 0;
 }

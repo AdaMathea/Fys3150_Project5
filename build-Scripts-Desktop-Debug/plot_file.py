@@ -43,7 +43,7 @@ with open(Filename, "w") as outfile:
         outfile.write("%s\n"%line)
 """
 values_plotted = 5000
-t_lim = 12
+t_lim = 730
 t = np.array([np.array(i) for i in t])
 S = np.array([np.array(i) for i in S])
 I = np.array([np.array(i) for i in I])
