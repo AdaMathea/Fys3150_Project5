@@ -56,7 +56,6 @@ if Plot_choice == "y":
     for i in range(len(t)):
         plt.plot(t[i][0:values_plotted], S[i][0:values_plotted], label = "S_%s"%liste[i])
 
-    plt.title("SIRS Model solved by %s"%Metode)
     plt.xlabel("Time")
     plt.ylabel("Susceptible")
     plt.legend()
@@ -66,7 +65,6 @@ if Plot_choice == "y":
     for i in range(len(t)):
         plt.plot(t[i][0:values_plotted], I[i][0:values_plotted], label = "I_%s"%liste[i])
 
-    plt.title("SIRS Model solved by %s"%Metode)
     plt.xlabel("Time")
     plt.ylabel("Infected")
     plt.legend()
@@ -76,7 +74,6 @@ if Plot_choice == "y":
     for i in range(len(t)):
         plt.plot(t[i][0:values_plotted], R[i][0:values_plotted], label = "R_%s"%liste[i])
 
-    plt.title("SIRS Model solved by %s"%Metode)
     plt.xlabel("Time")
     plt.ylabel("Recovered")
     plt.legend()
@@ -90,7 +87,6 @@ elif Plot_choice == "n":
         plt.plot(t[i][t[i] < t_lim], S[i][t[i] < t_lim], label = "S_%s"%liste[i])
         plt.plot(t[i][t[i] < t_lim], I[i][t[i] < t_lim], label = "I_%s"%liste[i])
         plt.plot(t[i][t[i] < t_lim], R[i][t[i] < t_lim], label = "R_%s"%liste[i])
-        plt.title("SIRS Model solved by %s"%Metode)
         plt.xlabel("Time")
         plt.ylabel("Population")
         plt.legend()

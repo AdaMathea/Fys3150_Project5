@@ -90,8 +90,9 @@ double SIRS::a_t(double omega, double a_0, double A, double t_n)
 double SIRS::f_t(double t)
 {
     // A function calculating the rate of vaccination
+
     return f * t;
-}
+} // end of f_t
 
 void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, char letter, bool vital = false, bool season = false, bool vacc = false)
 {
@@ -133,7 +134,7 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
 
     if(test == false)
     {
-        string filename = "RK_v2y.txt";
+        string filename = "RK_vac.txt";
 
         if (letter == 'A')  // Opens file at the beginning if letter equals A
         {
@@ -256,10 +257,10 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
     {
         string filename;
         if(!multicycle) {
-            filename = "MC_v2y.txt"; // Opens different file then the Runge Kutta function
+            filename = "MC_vac.txt"; // Opens different file then the Runge Kutta function
         }
         else {
-            filename = "MC_v2y" + to_string(cycle) + ".txt"; // Opens different file then the Runge Kutta function
+            filename = "MC_vac" + to_string(cycle) + ".txt"; // Opens different file then the Runge Kutta function
         }
 
         if (letter == 'A')

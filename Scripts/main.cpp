@@ -42,7 +42,7 @@ int main()
     A->d = 0.006;   // death rate
     A->dI = 0.002;  // death rate due to illness
     A->e = 0.012;   // birth rate
-    A->f = 0.1;      // vaccination rate
+    A->f = 0.1;     // initial value for the vaccination rate
 
     //A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, false, false);    // Run of class A, solved by Runge Kutta 4
     //A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, false, false);   // Run of class A, solved by Runge Kutta 4 with vitality
@@ -57,8 +57,8 @@ int main()
         //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, false, false, false, lim > 0);    // Run of class A, solved by Monte Carlo
         //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, true, false, false, lim > 0);   // Run of class A, solved by Monte Carlo with vitality
         //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, false, true, false, lim > 0);   // Run of class A, solved by Monte Carlo with seasons
-        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, false, false, true, lim > 0);    // Run of class A, solved by Monte Carlo with vaccination
-        A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, true, true, false, lim > 0);    // Run of class A, solved by Monte Carlo with vitality and seasons
+        A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, false, false, true, lim > 0);    // Run of class A, solved by Monte Carlo with vaccination
+        //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, true, true, false, lim > 0);    // Run of class A, solved by Monte Carlo with vitality and seasons
         //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, true, false, true, lim > 0);    // Run of class A, solved by Monte Carlo with vitality and vaccination
         //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, false, true, true, lim > 0);    // Run of class A, solved by Monte Carlo with seasons and vaccination
         //A->montecarlo(0, 100, 300, 100, 0.1, 'A', i, true, true, true, lim > 0);    // Run of class A, solved by Monte Carlo with vitality, seasons and vaccination
