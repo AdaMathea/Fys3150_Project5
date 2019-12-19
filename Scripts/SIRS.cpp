@@ -145,7 +145,7 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
 
     if(test == false)
     {
-        string filename = "RK_vs.txt";
+        string filename = "RK_v2y.txt";
 
         if (letter == 'A')  // Opens file at the beginning if letter equals A
         {
@@ -164,7 +164,7 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
     { 
         if(season == true)
         {
-            a = a_t(2 * M_PI / 100, 4, 2, t_);  // Calculate the variating a if seasons are enabled
+            a = a_t(2*M_PI/365.25, 4, 1, t_);  // Calculate the variating a if seasons are enabled
         }
 
         // Apply Runge Kutta Formulas to find next value of y
@@ -263,10 +263,10 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
     {
         string filename;
         if(!multicycle) {
-            filename = "MC_vs.txt"; // Opens different file then the Runge Kutta function
+            filename = "MC_v2y.txt"; // Opens different file then the Runge Kutta function
         }
         else {
-            filename = "MC_vs" + to_string(cycle) + ".txt"; // Opens different file then the Runge Kutta function
+            filename = "MC_v2y" + to_string(cycle) + ".txt"; // Opens different file then the Runge Kutta function
         }
 
         if (letter == 'A')
@@ -298,7 +298,7 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
     {
         if(season == true)
         {
-            a = a_t(2 * M_PI / 100, 4, 2, t_);  // Calculates the variable infection rate
+            a = a_t(2*M_PI/365.25, 4, 1, t_);  // Calculates the variable infection rate
         }
 
         delta_t = min(min(4 / (a * N), 1 / (b * N)), 1 / (c * N));  // Finds the timestep
