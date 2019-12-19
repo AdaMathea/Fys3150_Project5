@@ -89,8 +89,8 @@ double SIRS::a_t(double omega, double a_0, double A, double t_n)
 
 double SIRS::f_t(double t)
 {
-    // Rate of vaccination
-    return 0;
+    // A function calculating the rate of vaccination
+    return f * t;
 }
 
 void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, char letter, bool vital = false, bool season = false, bool vacc = false)
@@ -157,7 +157,7 @@ void SIRS::rungekutta(double t_0, double t, double S_0, double I_0, double h, ch
 
         if (vacc == true)
         {
-            f = f + h;
+            f = f_t(t_);  // Calculation of the variating f
         }
 
         // Apply Runge Kutta Formulas to find next value of y
@@ -293,6 +293,11 @@ void SIRS::montecarlo(double t_0, double t, double S_0, double I_0, double h, ch
         if(season == true)
         {
             a = a_t(2*M_PI/365.25, 4, 1, t_);  // Calculates the variable infection rate
+        }
+
+        if (vacc == true)
+        {
+            f = f_t(t_);  // Calculation of the variating f
         }
 
         delta_t = min(min(4 / (a * N), 1 / (b * N)), 1 / (c * N));  // Finds the timestep

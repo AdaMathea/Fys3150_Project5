@@ -42,7 +42,7 @@ int main()
     A->d = 0.006;   // death rate
     A->dI = 0.002;  // death rate due to illness
     A->e = 0.012;   // birth rate
-    A->f = 0.1      // vaccination rate
+    A->f = 0.1;      // vaccination rate
 
     //A->rungekutta(0, 100, 300, 100, 0.1, 'A', false, false, false);    // Run of class A, solved by Runge Kutta 4
     //A->rungekutta(0, 100, 300, 100, 0.1, 'A', true, false, false);   // Run of class A, solved by Runge Kutta 4 with vitality
